@@ -1,0 +1,14 @@
+ client:
+    build: ./client
+    image: webapp-react
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./client:/var/www/localhost/htdocs
+    networks: 
+    - backend
+    environment:
+       NODE_SERVR: "http://192.168.1.8:3000"
+    depends_on:
+      - api  

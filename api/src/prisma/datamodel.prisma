@@ -1,0 +1,18 @@
+type GamePlay {
+  id: ID! @id  
+  player1: String!
+  player2: String!
+  winner: String!
+  draw: Boolean!
+  boxes: [Box]
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Box @embedded{
+  id: String!
+  player: Int!
+  step: Int!
+  value:String!
+}
+

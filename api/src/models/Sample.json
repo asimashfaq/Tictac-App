@@ -1,0 +1,41 @@
+{
+    "winner": "1",
+    "boxes": [
+      {
+        "id": "box0",
+        "value":"o",
+        "player":1,
+        "step":1
+      },
+      {
+        "id": "box4",
+        "value":"o",
+        "player":1,
+        "step":3
+        
+      },
+      {
+        "id": "box8",
+        "value":"o",
+        "player":1,
+        "step":5
+      },
+      {
+        "id": "box2",
+        "value":"x",
+        "player":2,
+        "step":2
+      },
+      {
+        "id": "box3",
+        "value":"x",
+        "player":2,
+        "step":4
+      }
+    ],
+    "draw": false,
+    "id": "5d81cc27a7b11b000834b64a",
+    "player2": "x",
+    "player1": "testplayer2"
+  }
+ 

@@ -1,0 +1,27 @@
+.menu-list{
+    a::before{
+        color: #ffffff;
+    }
+}
+.ant-menu-item{
+    .ant-typography{
+        width: 230px;
+        float: right;
+        a{
+            color: #fff !important;
+            width: 230px;
+            float: right;
+        }
+    }
+}
+.ant-menu-item-selected{
+    span {
+        width: 230px;
+        float: right
+    }
+    a{
+        color: #fff !important;
+        width: 230px;
+        float: right;
+    }
+}
