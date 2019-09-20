@@ -1,8 +1,7 @@
 # Tictac-App
 Technology stack
-[Create React App](https://github.com/facebook/create-react-app).
-Node.js
-[Prisma.io](https://prisma.io).
+
+React.Js + Node.js+ Prisma + Mongodb
 
 
 
