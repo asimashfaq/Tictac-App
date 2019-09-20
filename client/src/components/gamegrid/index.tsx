@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, useCallback, useLayoutEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Layout, Row, Col, Card, Typography } from 'antd'
 import GameBox from './gamebox'
 import './gamegrid.scss'
@@ -15,7 +15,7 @@ interface Props {}
 const GameGrid = () => {
   const [state, dispatch] = useReducer(gameReducer, GAME_INITIALS)
   // store dispatcher and state
-  const sState = useSelector((state: any) => state.gameplayadd)
+  //  const sState = useSelector((state: any) => state.gameplayadd)
   const sdispatch = useDispatch()
 
   const animateGame = useCallback(() => {
@@ -37,7 +37,20 @@ const GameGrid = () => {
       dispatch({ type: 'disable', payload: buttonIndex })
     })
   }
-
+  const saveGamePlay = useCallback(
+    (draw: boolean, player: string) => {
+      sdispatch(
+        addGamePlay({
+          winner: player,
+          player1: state.player1,
+          player2: state.player2,
+          draw,
+          boxes: state.boxes,
+        })
+      )
+    },
+    [sdispatch, state.boxes, state.player1, state.player2]
+  )
   useEffect(() => {
     if (state.replay || state.drawModalVisible) {
       return
@@ -59,7 +72,14 @@ const GameGrid = () => {
       }
     }
     return () => {}
-  }, [state.boxes, state.replay, state.drawModalVisible, state.winnerPlayer, state.step])
+  }, [
+    state.boxes,
+    state.replay,
+    state.drawModalVisible,
+    state.winnerPlayer,
+    state.step,
+    saveGamePlay,
+  ])
 
   useEffect(() => {
     if (state.replay) {
@@ -89,17 +109,7 @@ const GameGrid = () => {
       element.innerHTML = `<span>-</span>`
     }
   }
-  const saveGamePlay = (draw: boolean, player: string) => {
-    sdispatch(
-      addGamePlay({
-        winner: player,
-        player1: state.player1,
-        player2: state.player2,
-        draw,
-        boxes: state.boxes,
-      })
-    )
-  }
+
   const btnCallBack = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       const id: string = event.currentTarget.id
@@ -130,7 +140,6 @@ const GameGrid = () => {
   }
   return (
     <Layout className="gamegrid">
-      <Row>{items}</Row>
       <Layout style={{ background: '#ECECEC', padding: '30px' }} />
       <Row>
         <Col span={8}>
@@ -149,7 +158,9 @@ const GameGrid = () => {
           </Card>
         </Col>
       </Row>
+      <Row>{items}</Row>
       <GameModal
+        key={'success'}
         mstatus={'success'}
         title={'Congraulations!'}
         subtitle={`Player ${state.winnerPlayer} Wins`}
@@ -163,6 +174,7 @@ const GameGrid = () => {
         visible={state.successModalVisible}
       />
       <GameModal
+        key={'error'}
         mstatus={'error'}
         title={'Match Draw'}
         subtitle={`Both players failed`}
@@ -176,6 +188,7 @@ const GameGrid = () => {
         visible={state.drawModalVisible}
       />
       <GameModal
+        key={'warning'}
         mstatus={'warning'}
         title={'Reply End'}
         subtitle={``}

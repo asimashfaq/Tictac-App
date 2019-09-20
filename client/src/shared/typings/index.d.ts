@@ -11,6 +11,7 @@ interface iGamePlayList extends iGamePlay {
 
 interface rState {
   data: iGamePlay[]
+  gameplay: iGamePlay
   fetching: boolean
   error: any
 }
@@ -48,4 +49,4 @@ interface Winner {
 interface ICheckWinner {
   (dataset: Box[]): Winner
 }
-interface window{}
+interface window {}

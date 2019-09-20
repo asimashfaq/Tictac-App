@@ -1,5 +1,6 @@
 import React from 'react'
 import { Result, Button, Modal } from 'antd'
+import { Link } from 'react-router-dom'
 interface Props {
   visible: boolean
   mstatus: string // message status
@@ -22,6 +23,7 @@ const GameModal = (state: Props) => {
           <Button type="primary" key="replay" onClick={state.replay}>
             RePlay
           </Button>,
+          <Link to="/history">View History</Link>
         ]}
       />
     </Modal>

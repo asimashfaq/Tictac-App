@@ -5,6 +5,10 @@ export const ADD_GAMEPLAY_REQUEST: 'ADD_GAMEPLAY_REQUEST' = 'ADD_GAMEPLAY_REQUES
 export const ADD_GAMEPLAY_SUCCESS: 'ADD_GAMEPLAY_SUCCESS' = 'ADD_GAMEPLAY_SUCCESS'
 export const ADD_GAMEPLAY_FAILURE: 'ADD_GAMEPLAY_FAILURE' = 'ADD_GAMEPLAY_FAILURE'
 
+export const GET_GAMEPLAY_REQUEST: 'GET_GAMEPLAY_REQUEST' = 'GET_GAMEPLAY_REQUEST'
+export const GET_GAMEPLAY_SUCCESS: 'GET_GAMEPLAY_SUCCESS' = 'GET_GAMEPLAY_SUCCESS'
+export const GET_GAMEPLAY_FAILURE: 'GET_GAMEPLAY_FAILURE' = 'GET_GAMEPLAY_FAILURE'
+
 export const fetchListSuccess = (list: any) => ({
   type: FETCH_LIST_SUCCESS,
   payload: list,
@@ -32,6 +36,22 @@ export const addGamePlayStarted = () => ({
 
 export const addGamePlayFailure = (error: any) => ({
   type: ADD_GAMEPLAY_FAILURE,
+  payload: {
+    error,
+  },
+})
+
+export const getGamePlaySuccess = (data: any) => ({
+  type: GET_GAMEPLAY_SUCCESS,
+  payload: data,
+})
+
+export const getGamePlayStarted = () => ({
+  type: GET_GAMEPLAY_REQUEST,
+})
+
+export const getGamePlayFailure = (error: any) => ({
+  type: GET_GAMEPLAY_FAILURE,
   payload: {
     error,
   },

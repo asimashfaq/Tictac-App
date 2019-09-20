@@ -6,6 +6,9 @@ import {
   addGamePlayStarted,
   addGamePlaySuccess,
   addGamePlayFailure,
+  getGamePlayFailure,
+  getGamePlayStarted,
+  getGamePlaySuccess,
 } from '../actions/index'
 const globalAny: any = global
 
@@ -30,6 +33,19 @@ export const addGamePlay = (data: iGamePlay) => {
       })
       .catch(err => {
         dispatch(addGamePlayFailure(err.message))
+      })
+  }
+}
+export const getGamePlay = (id: string) => {
+  return (dispatch: any) => {
+    dispatch(getGamePlayStarted())
+    axios
+      .get(`${globalAny.window._env_.API_URL}/gameplay/${id}`)
+      .then(res => {
+        dispatch(getGamePlaySuccess(res.data))
+      })
+      .catch(err => {
+        dispatch(getGamePlayFailure(err.message))
       })
   }
 }
