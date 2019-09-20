@@ -1,8 +1,7 @@
 # Tictac-App
 Technology stack
-[Create React App](https://github.com/facebook/create-react-app).
-Node.js
-[Prisma.io](https://prisma.io).
+
+React.Js + Node.js+ Prisma + Mongodb
 
 
 
@@ -18,7 +17,8 @@ To setup this project kindly do the following steps
 ```
 
 ### 3.Run docker docker
-You can also define the backend api host in the docker-compose file by setting enviornment variable API_URL
+You can also define the backend api host in the docker-compose file by setting enviornment variable 
+[API_URL]
 ```
 docker-compose up or docker-compose up -d
 ```
@@ -27,6 +27,14 @@ docker-compose up or docker-compose up -d
 ```
  cd ./api/src/prisma
 ```
+
+### 6.Install Prisma locally
+We need prisma to deploy the databmodel to the prisma and mongodb.
+#### Note Prisma should be up and running at port :4466
+```
+npm install -g prisma
+```
+
 
 ### 5.Run command
 ```
