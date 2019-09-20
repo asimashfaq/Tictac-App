@@ -7,12 +7,13 @@ import {
   addGamePlaySuccess,
   addGamePlayFailure,
 } from '../actions/index'
-import { URL } from '../../../../configs/config'
+const globalAny: any = global
+
 export const fetchList = () => {
   return (dispatch: any) => {
     dispatch(fetchListStarted())
     axios
-      .get(`${URL}/gameplays`)
+      .get(`${globalAny.window._env_.API_URL}/gameplays`)
       .then(res => dispatch(fetchListSuccess(res.data)))
       .catch(err => {
         dispatch(fetListFailure(err.message))
@@ -23,7 +24,7 @@ export const addGamePlay = (data: iGamePlay) => {
   return (dispatch: any) => {
     dispatch(addGamePlayStarted())
     axios
-      .post(`${URL}/gameplay`, data)
+      .post(`${globalAny.window._env_.API_URL}/gameplay`, data)
       .then(res => {
         dispatch(addGamePlaySuccess(res.data.id))
       })

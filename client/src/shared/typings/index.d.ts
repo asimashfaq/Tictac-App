@@ -48,3 +48,4 @@ interface Winner {
 interface ICheckWinner {
   (dataset: Box[]): Winner
 }
+interface window{}
