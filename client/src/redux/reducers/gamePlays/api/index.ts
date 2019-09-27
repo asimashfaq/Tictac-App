@@ -10,18 +10,21 @@ import {
   getGamePlayStarted,
   getGamePlaySuccess,
 } from '../actions/index'
+import { async } from 'q';
+
 const globalAny: any = global
 
-export const fetchList = () => {
-  return (dispatch: any) => {
+export const fetchList = () => (dispatch: any) => {
     dispatch(fetchListStarted())
-    axios
+   return axios
       .get(`${globalAny.window._env_.API_URL}/gameplays`)
-      .then(res => dispatch(fetchListSuccess(res.data)))
+      .then(res => {
+        dispatch(fetchListSuccess(res.data))
+        return res
+      })
       .catch(err => {
         dispatch(fetListFailure(err.message))
       })
-  }
 }
 export const addGamePlay = (data: iGamePlay) => {
   return (dispatch: any) => {
@@ -37,11 +40,13 @@ export const addGamePlay = (data: iGamePlay) => {
   }
 }
 export const getGamePlay = (id: string) => {
-  return (dispatch: any) => {
+  return async (dispatch: any) => {
     dispatch(getGamePlayStarted())
-    axios
+
+    await axios
       .get(`${globalAny.window._env_.API_URL}/gameplay/${id}`)
       .then(res => {
+        console.log("-----",res)
         dispatch(getGamePlaySuccess(res.data))
       })
       .catch(err => {
