@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchList } from '../../redux/reducers/gamePlays/api'
 
-const History = () => {
+const GamePlays = () => {
   const columns = [
     {
       title: 'ID',
@@ -45,14 +45,14 @@ const History = () => {
     dispatch(fetchList())
   }, [dispatch])
   return (
-    <div>
+    <React.Fragment>
       {state.fetching === false ? (
         <Table rowKey={record => record.id} dataSource={state.data} columns={columns} />
       ) : (
         <div>Loading</div>
       )}
-    </div>
+    </React.Fragment>
   )
 }
 
-export default History
+export default GamePlays

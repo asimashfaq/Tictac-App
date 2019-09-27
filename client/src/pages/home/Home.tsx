@@ -3,9 +3,9 @@ import React from 'react'
 import GameGrid from '../../components/gamegrid'
 const Home = () => {
   return (
-    <div>
+    <React.Fragment>
       <GameGrid />
-    </div>
+    </React.Fragment>
   )
 }
 

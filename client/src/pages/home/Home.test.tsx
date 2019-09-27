@@ -1,9 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
 import Home from './Home'
+import { shallow } from 'enzyme';
 
-it('Home renders without crashing', () => {
-  const div = document.createElement('div')
-  ReactDOM.render(<Home />, div)
-  ReactDOM.unmountComponentAtNode(div)
-})
+let wrapper:any;
+beforeEach(() => {
+    wrapper = shallow(<Home />);
+});
+describe('<Home /> rendering', () => {
+  it ('should render correctly ',()=>{
+        expect(wrapper).toMatchSnapshot();
+  })
+  it('should render one <GameGrid>', () => {
+      expect(wrapper.find('GameGrid')).toHaveLength(1);
+  });
+});

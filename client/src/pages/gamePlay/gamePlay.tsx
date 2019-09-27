@@ -20,8 +20,6 @@ const GamePlay = ({ match }: any) => {
     items.push(<GameBox key={`box${i}`} id={`box${i}`} buttondisable={true} callback={() => {}} />)
   }
   if (!sState.fetching) {
-    // data = data[0]
-    console.log(gameplay)
     setTimeout(() => {
       gameplay.boxes.forEach((box: Box) => {
         const element: HTMLElement | null = document.getElementById(`${box.id}`)!
@@ -33,7 +31,6 @@ const GamePlay = ({ match }: any) => {
     <div>
       {sState.fetching === false ? (
         <Layout className="gamegrid">
-          {console.log(gameplay)}
           <Layout style={{ background: '#ECECEC', padding: '30px' }} />
           <Row>
             <Col span={8}>
