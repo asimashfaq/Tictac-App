@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Table } from 'antd'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchList } from '../../redux/gamePlay/list/api'
+import { getGamePlays } from '../../redux/gamePlay/list/api'
 
 const GamePlays = () => {
   const columns = [
@@ -42,7 +42,7 @@ const GamePlays = () => {
   const state = useSelector((state: any) => state.gameplay.list)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(fetchList())
+    dispatch(getGamePlays())
   }, [dispatch])
   return (
     <React.Fragment>

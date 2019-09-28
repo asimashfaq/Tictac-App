@@ -7,7 +7,7 @@ import {
 
 const globalAny: any = global
 
-export const fetchList = () => (dispatch: any) => {
+export const getGamePlays = () => (dispatch: any) => {
     dispatch(getGamePlaysStarted())
    return axios
       .get(`${globalAny.window._env_.API_URL}/gameplays`)
@@ -18,6 +18,6 @@ export const fetchList = () => (dispatch: any) => {
       .catch(err => {
         dispatch(getGamePlaysFailure(err.message))
       })
-      
+
 }
 

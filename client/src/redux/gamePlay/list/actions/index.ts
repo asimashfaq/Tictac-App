@@ -1,3 +1,5 @@
+import { GET_GAMEPLAY_FAILURE } from "../../get/actions";
+
 export const GET_GAMEPLAYS_REQUEST: 'GET_GAMEPLAYS_REQUEST' = 'GET_GAMEPLAYS_REQUEST'
 export const GET_GAMEPLAYS_SUCCESS: 'GET_GAMEPLAYS_SUCCESS' = 'GET_GAMEPLAYS_SUCCESS'
 export const GET_GAMEPLAYS_FAILURE: 'GET_GAMEPLAYS_FAILURE' = 'GET_GAMEPLAYS_FAILURE'
@@ -13,7 +15,7 @@ export const getGamePlaysStarted = () => ({
 })
 
 export const getGamePlaysFailure = (error: any) => ({
-  type: GET_GAMEPLAYS_REQUEST,
+  type: GET_GAMEPLAY_FAILURE,
   payload: {
     error,
   },

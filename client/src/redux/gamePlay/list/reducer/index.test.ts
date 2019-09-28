@@ -1,32 +1,31 @@
-import gamePlayListReducer, {INITIAL_STATE} from './gamePlayListReducer'
-import { FETCH_LIST_REQUEST, FETCH_LIST_SUCCESS } from './actions';
-describe('gamePlayListReducer',() => {
+import {
+    GET_GAMEPLAYS_FAILURE,
+    GET_GAMEPLAYS_REQUEST,
+    GET_GAMEPLAYS_SUCCESS
+  } from '../actions'
+  import gamePlayListReducer ,{INITIAL_STATE}from './index'
+
+  describe('gamePlayListReducer',() => {
     it("returns the initial state correctly", () => {
         const reducer = gamePlayListReducer(undefined, {} as rProps);
         expect(reducer).toEqual(INITIAL_STATE);
       });
 })
 
-it("handles FETCH_LIST_REQUEST as expected", () => {
-    const reducer = gamePlayListReducer(INITIAL_STATE, { type: FETCH_LIST_REQUEST,payload:undefined });
+
+it("handles GET_GAMEPLAYS_REQUEST as expected", () => {
+    const reducer = gamePlayListReducer(INITIAL_STATE, { type: GET_GAMEPLAYS_REQUEST,payload:undefined });
 
     expect(reducer).toEqual({
         data: [],
         fetching: true,
         error: null,
-        gameplay: {
-          winner: '0',
-          player1: '-',
-          player2: '-',
-          boxes: [],
-          draw: true,
-        },
     });
   });
 
-  it("handles FETCH_LIST_SUCCESS as expected", () => {
+it("handles GET_GAMEPLAYS_SUCCESS as expected", () => {
     const reducer = gamePlayListReducer(INITIAL_STATE, {
-      type: FETCH_LIST_SUCCESS,
+      type: GET_GAMEPLAYS_SUCCESS,
       payload:  [{                
             "boxes": [
             {
@@ -48,13 +47,6 @@ it("handles FETCH_LIST_REQUEST as expected", () => {
       "player1": "1"
     }],
       fetching: false,
-      error: null,
-      gameplay: {
-        winner: '0',
-        player1: '-',
-        player2: '-', 
-        boxes: [],
-        draw: true,
-      }
+      error: null
     });
   });

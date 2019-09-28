@@ -1,9 +1,11 @@
 import moxios from 'moxios'
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import { fetchList } from "./index";
+import { getGamePlays } from "./index";
+import { GET_GAMEPLAYS_REQUEST, GET_GAMEPLAYS_SUCCESS } from '../actions';
+import { GET_GAMEPLAY_FAILURE } from '../../get/actions';
 
-const globalAny: any = global
+
 Object.defineProperty(window, '_env_', {
     writable: true,
     value:{API_URL:"http://"},
@@ -22,8 +24,8 @@ describe("User Actions", () => {
         moxios.uninstall()
     })
   
-    describe("FETCH_LIST action listgameplays", () => {
-      it("dispatches FETCH_LIST action and returns data on success",  () => {
+    describe("GET_GAMEPLAYS action listgameplays", () => {
+      it("dispatches GET_GAMEPLAYS action and returns data on success",  () => {
           
           moxios.wait(() => {
             const request = moxios.requests.mostRecent();
@@ -39,28 +41,27 @@ describe("User Actions", () => {
               }],
             });
           });
-         return store.dispatch(fetchList()).then(() => {
+         return store.dispatch(getGamePlays()).then(() => {
             const actions = store.getActions();
             expect.assertions(3);
-            expect(actions[0].type).toEqual("FETCH_LIST_REQUEST");
-            expect(actions[1].type).toEqual("FETCH_LIST_SUCCESS");
+            expect(actions[0].type).toEqual(GET_GAMEPLAYS_REQUEST);
+            expect(actions[1].type).toEqual(GET_GAMEPLAYS_SUCCESS);
             expect(actions[1].payload[0].player1).toEqual("1");
          })
       });
   
-      it("tests FETCH_LIST action and that returns an error", async () => {
+      it("tests GET_GAMEPLAYS action and that returns an error", async () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.respondWith({
               status: 404,
-            //  response: {"error":"Something Went Wrong"},
             });
           });
-         return store.dispatch(fetchList()).then(() => {
+         return store.dispatch(getGamePlays()).then(() => {
             const actions = store.getActions();
             expect.assertions(3);
-            expect(actions[0].type).toEqual("FETCH_LIST_REQUEST");
-            expect(actions[1].type).toEqual("FETCH_LIST_FAILURE");
+            expect(actions[0].type).toEqual(GET_GAMEPLAYS_REQUEST);
+            expect(actions[1].type).toEqual(GET_GAMEPLAY_FAILURE);
             expect(actions[1].payload.error).toEqual("Request failed with status code 404");
          })
         
