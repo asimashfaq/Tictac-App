@@ -4,16 +4,21 @@ import { Layout, Row, Col, Card, Typography } from 'antd'
 import GameBox from './gamebox'
 import './gamegrid.scss'
 import { GAME_INITIALS } from './props'
-import { sleep, gameReducer, CheckWinner, InitalizeGame } from './functions/Functions'
+import { gameReducer, CheckWinner, InitalizeGame } from './functions/Functions'
 import GameModal from '../gamemodal/GameModal'
 import { addGamePlay } from '../../redux/reducers/gamePlays/api'
 
 const { Text } = Typography
 
-let animateDelay = 1000
+let animateDelay = 800
 let firstload = true
 const boxRefs:any =[]
-interface Props {}
+const waitFor = (ms:any) => new Promise(r => setTimeout(r, ms))
+const asyncForEach = async (array:any, callback:any) => {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array)
+  }
+}
 const GameGrid = () => {
   const [state, dispatch] = useReducer(gameReducer, GAME_INITIALS)
   // store dispatcher and state
@@ -22,21 +27,21 @@ const GameGrid = () => {
   
 
   const animateGame = useCallback(() => {
-    return new Promise(res => {
-      state.boxes.forEach(async (box: Box, index: number) => {
-        animateDelay = animateDelay + 1000
-        await updateBoxUI(box.id, box.value, animateDelay)
-        if (index === state.boxes.length - 1) {
-          res()
+    return new Promise( async res => {
+
+      await asyncForEach(state.boxes,async (box: Box, index: number) => {
+        updateBoxUI(box.id, box.value)
+        if(index< state.boxes.length -1 )
+        {
+          await waitFor(animateDelay)
         }
       })
+      res()
     })
   }, [state.boxes,boxRefs])
-  const updateBoxUI = async (boxId: string, boxValue: string, animateDelay: number) => {
-    return await sleep(animateDelay).then(() => {
-      boxRefs[boxId].buttonNode.innerHTML  = `<span>${boxValue}</span>`
-      boxRefs[boxId].buttonNode.disabled = true
-    })
+  const updateBoxUI =  (boxId: string, boxValue: string) => {
+    boxRefs[boxId].buttonNode.innerHTML  = `<span>${boxValue}</span>`
+    boxRefs[boxId].buttonNode.disabled = true
   }
   const saveGamePlay = useCallback(
     (draw: boolean, player: string) => {
@@ -87,7 +92,7 @@ const GameGrid = () => {
       restUI()
       animateDelay = 1000
       animateGame().then(() => {
-        sleep(1000).then(() => {
+        waitFor(500).then(() => {
           dispatch({ type: 'replay_end' })
         })
       })

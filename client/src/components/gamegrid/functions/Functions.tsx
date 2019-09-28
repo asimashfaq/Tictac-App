@@ -1,8 +1,5 @@
 import { SuccessPattrens } from '../props'
 
-export const sleep = (ms: number) => {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
 
 export const CheckWinner: ICheckWinner = (dataset: Box[]): Winner => {
   let winningPlayer: Winner = { player: 0, draw: true }
