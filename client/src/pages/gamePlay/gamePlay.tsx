@@ -9,7 +9,7 @@ const { Text } = Typography
 const GamePlay = ({ match }: any) => {
   const sState = useSelector((state: any) => state.gameplaylist)
   const { gameplay } = sState
-
+  const boxRefs:any =[]
   const sdispatch = useDispatch()
   useEffect(() => {
     sdispatch(getGamePlay(match.params.id))
@@ -17,7 +17,9 @@ const GamePlay = ({ match }: any) => {
   const items = []
   // tslint:disable-next-line: no-increment-decrement
   for (let i = 0; i < 9; i++) {
-    items.push(<GameBox key={`box${i}`} id={`box${i}`} buttondisable={true} callback={() => {}} />)
+    items.push(<GameBox
+      ref={(input:any)=>{boxRefs[i] = input}}
+      key={`box${i}`} id={`box${i}`} callback={() => {}} />)
   }
   if (!sState.fetching) {
     setTimeout(() => {

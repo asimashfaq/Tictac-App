@@ -9,14 +9,17 @@ import GameModal from '../gamemodal/GameModal'
 import { addGamePlay } from '../../redux/reducers/gamePlays/api'
 
 const { Text } = Typography
+
 let animateDelay = 1000
 let firstload = true
+const boxRefs:any =[]
 interface Props {}
 const GameGrid = () => {
   const [state, dispatch] = useReducer(gameReducer, GAME_INITIALS)
   // store dispatcher and state
   //  const sState = useSelector((state: any) => state.gameplayadd)
   const sdispatch = useDispatch()
+  
 
   const animateGame = useCallback(() => {
     return new Promise(res => {
@@ -28,13 +31,11 @@ const GameGrid = () => {
         }
       })
     })
-  }, [state.boxes])
+  }, [state.boxes,boxRefs])
   const updateBoxUI = async (boxId: string, boxValue: string, animateDelay: number) => {
     return await sleep(animateDelay).then(() => {
-      const element: HTMLElement | null = document.getElementById(boxId)!
-      element.innerHTML = `<span>${boxValue}</span>`
-      const buttonIndex: number = parseInt(boxId.slice(-1), 10)
-      dispatch({ type: 'disable', payload: buttonIndex })
+      boxRefs[boxId].buttonNode.innerHTML  = `<span>${boxValue}</span>`
+      boxRefs[boxId].buttonNode.disabled = true
     })
   }
   const saveGamePlay = useCallback(
@@ -105,15 +106,16 @@ const GameGrid = () => {
   const restUI = () => {
     // tslint:disable-next-line: no-increment-decrement
     for (let i: number = 0; i < 9; i++) {
-      const element: HTMLElement | null = document.getElementById(`box${i}`)!
-      element.innerHTML = `<span>-</span>`
+     boxRefs[`box${i}`].buttonNode.innerHTML = `<span>-</span>`
+     boxRefs[`box${i}`].buttonNode.disabled = false
     }
   }
 
   const btnCallBack = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       const id: string = event.currentTarget.id
-      event.currentTarget.innerHTML = `<span>${state.letter}</span>`
+      boxRefs[id].buttonNode.innerHTML = `<span>${state.letter}</span>`
+      boxRefs[id].buttonNode.disabled = true
       dispatch({
         type: 'click',
         payload: {
@@ -124,20 +126,23 @@ const GameGrid = () => {
         },
       })
     },
-    [state]
+    [state,boxRefs]
   )
-  const items = []
-  // tslint:disable-next-line: no-increment-decrement
-  for (let i = 0; i < 9; i++) {
-    items.push(
-      <GameBox
-        key={`box${i}`}
-        id={`box${i}`}
-        buttondisable={state.buttonDisable[i]}
-        callback={btnCallBack}
-      />
-    )
-  }
+  const items:any = []
+ 
+    // tslint:disable-next-line: no-increment-decrement
+    for (let i = 0; i < 9; i++) {
+      items.push(
+        <GameBox
+          key={`box${i}`}
+          id={`box${i}`}
+          ref={(input:any)=> { boxRefs[`box${i}`] = input}}
+          callback={btnCallBack}
+        />
+      )
+    }
+
+ 
   return (
     <Layout className="gamegrid">
       <Layout style={{ background: '#ECECEC', padding: '30px' }} />

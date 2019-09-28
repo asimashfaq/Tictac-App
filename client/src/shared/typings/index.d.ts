@@ -37,7 +37,6 @@ interface Game {
   loading: boolean
   successModalVisible: boolean
   winnerPlayer: number
-  buttonDisable: boolean[]
   replay: boolean
   replyModalVisible: boolean
   drawModalVisible: boolean

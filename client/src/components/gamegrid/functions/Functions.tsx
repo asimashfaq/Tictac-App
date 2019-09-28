@@ -30,15 +30,12 @@ export const gameReducer = (state: any, action: any) => {
     case 'click': {
       const box: Box = action.payload
       const buttonIndex: number = parseInt(box.id.slice(-1), 10)
-      const bDisable = state.buttonDisable
-      bDisable[buttonIndex] = true
       return {
         ...state,
         boxes: [...state.boxes, box],
         step: state.step + 1,
         player: state.player === 1 ? 2 : 1,
-        letter: state.letter === 'x' ? 'o' : 'x',
-        buttonDisable: bDisable,
+        letter: state.letter === 'x' ? 'o' : 'x'
       }
     }
     case 'winner': {
@@ -66,7 +63,6 @@ export const gameReducer = (state: any, action: any) => {
         successModalVisible: false,
         drawModalVisible: false,
         replyModalVisible: false,
-        buttonDisable: [false, false, false, false, false, false, false, false, false],
       }
     }
     case 'replay_end': {
@@ -104,7 +100,6 @@ export const InitalizeGame = (): Game => {
     loading: false,
     successModalVisible: false,
     winnerPlayer: 0,
-    buttonDisable: [false, false, false, false, false, false, false, false, false],
     replay: false,
     replyModalVisible: false,
     drawModalVisible: false,
