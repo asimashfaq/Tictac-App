@@ -6,7 +6,7 @@ import './gamegrid.scss'
 import { GAME_INITIALS } from './props'
 import { gameReducer, CheckWinner, InitalizeGame } from './functions/Functions'
 import GameModal from '../gamemodal/GameModal'
-import { addGamePlay } from '../../redux/reducers/gamePlays/api'
+import { addGamePlay } from '../../redux/gamePlay/add/api'
 
 const { Text } = Typography
 
@@ -21,8 +21,7 @@ const asyncForEach = async (array:any, callback:any) => {
 }
 const GameGrid = () => {
   const [state, dispatch] = useReducer(gameReducer, GAME_INITIALS)
-  // store dispatcher and state
-  //  const sState = useSelector((state: any) => state.gameplayadd)
+ 
   const sdispatch = useDispatch()
   
 

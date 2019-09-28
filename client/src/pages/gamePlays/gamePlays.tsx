@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Table } from 'antd'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchList } from '../../redux/reducers/gamePlays/api'
+import { fetchList } from '../../redux/gamePlay/list/api'
 
 const GamePlays = () => {
   const columns = [
@@ -39,7 +39,7 @@ const GamePlays = () => {
       render: (text: string, record: any) => <Link to={`/replay/${record.id}`}>Replay Game</Link>,
     },
   ]
-  const state = useSelector((state: any) => state.gameplaylist)
+  const state = useSelector((state: any) => state.gameplay.list)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchList())
