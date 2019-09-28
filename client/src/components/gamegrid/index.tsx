@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect, useCallback, useLayoutEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Layout, Row, Col, Card, Typography } from 'antd'
-import GameBox from './gamebox'
+import GameBox from '../gamebox/gamebox'
 import './gamegrid.scss'
 import { GAME_INITIALS } from './props'
 import { gameReducer, CheckWinner, InitalizeGame } from './functions/Functions'
@@ -38,7 +38,7 @@ const GameGrid = () => {
       })
       res()
     })
-  }, [state.boxes,boxRefs])
+  }, [state.boxes])
   const updateBoxUI =  (boxId: string, boxValue: string) => {
     boxRefs[boxId].buttonNode.innerHTML  = `<span>${boxValue}</span>`
     boxRefs[boxId].buttonNode.disabled = true
@@ -131,7 +131,7 @@ const GameGrid = () => {
         },
       })
     },
-    [state,boxRefs]
+    [state]
   )
   const items:any = []
  

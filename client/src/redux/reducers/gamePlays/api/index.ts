@@ -10,7 +10,6 @@ import {
   getGamePlayStarted,
   getGamePlaySuccess,
 } from '../actions/index'
-import { async } from 'q';
 
 const globalAny: any = global
 

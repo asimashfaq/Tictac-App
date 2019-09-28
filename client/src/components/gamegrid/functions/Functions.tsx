@@ -26,8 +26,7 @@ export const gameReducer = (state: any, action: any) => {
       return action.payload
     case 'click': {
       const box: Box = action.payload
-      const buttonIndex: number = parseInt(box.id.slice(-1), 10)
-      return {
+     return {
         ...state,
         boxes: [...state.boxes, box],
         step: state.step + 1,
