@@ -1,6 +1,4 @@
-import axios from 'axios'
 import moxios from 'moxios'
-
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import { fetchList } from "./index";
@@ -22,7 +20,7 @@ describe("User Actions", () => {
     });
     afterEach(function () {
         moxios.uninstall()
-      })
+    })
   
     describe("FETCH_LIST action listgameplays", () => {
       it("dispatches FETCH_LIST action and returns data on success",  () => {
@@ -48,8 +46,6 @@ describe("User Actions", () => {
             expect(actions[1].type).toEqual("FETCH_LIST_SUCCESS");
             expect(actions[1].payload[0].player1).toEqual("1");
          })
-       
-       
       });
   
       it("tests FETCH_LIST action and that returns an error", async () => {

@@ -7,7 +7,7 @@ import {
   GET_GAMEPLAY_FAILURE,
 } from './actions'
 
-const INITIAL_STATE: rState = {
+export const INITIAL_STATE: rState = {
   data: [],
   fetching: true,
   error: null,
