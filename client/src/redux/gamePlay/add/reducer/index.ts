@@ -1,11 +1,15 @@
 import { ADD_GAMEPLAY_REQUEST, ADD_GAMEPLAY_SUCCESS, ADD_GAMEPLAY_FAILURE } from '../actions'
 
-const INITIAL_STATE: iGamePlay = {
-  winner: '',
-  player1: '',
-  player2: '',
-  draw: true,
-  boxes: [],
+export const INITIAL_STATE: any = {
+  data: {
+    winner: '',
+    player1: '',
+    player2: '',
+    draw: true,
+    boxes: [],
+  },
+  saving: false,
+  error: null,
 }
 export default (state = INITIAL_STATE, { type, payload }: rProps) => {
   switch (type) {
