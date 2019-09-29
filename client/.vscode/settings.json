@@ -9,7 +9,7 @@
   "[typescriptreact]": {
     "editor.formatOnSave": false
   },
-  "prettier.jsxSingleQuote": false,
+  "prettier.jsxSingleQuote": true,
   "prettier.singleQuote": true,
 
 }

@@ -18,6 +18,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
     "redux-thunk": "^2.3.0",
+    "sinon": "^7.5.0",
     "typescript": "3.6.3"
   },
   "scripts": {
@@ -27,7 +28,7 @@
     "start:js": "react-scripts start",
     "start": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && npm-run-all -p tslint-check  start:js",
     "build": "react-scripts build",
-    "test": "jest --watchAll",
+    "test": "jest  --watchAll",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -57,6 +58,7 @@
     "@types/react-redux": "^7.1.2",
     "@types/react-router-dom": "^4.3.5",
     "@types/redux-mock-store": "^1.0.1",
+    "@types/sinon": "^7.0.13",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.4.0",

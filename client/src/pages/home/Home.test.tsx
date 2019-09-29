@@ -1,16 +1,16 @@
-import React from 'react';
+import React from 'react'
 import Home from './Home'
-import { shallow } from 'enzyme';
+import { shallow } from 'enzyme'
 
-let wrapper:any;
+let wrapper: any
 beforeEach(() => {
-    wrapper = shallow(<Home />);
-});
+  wrapper = shallow(<Home />)
+})
 describe('<Home /> rendering', () => {
-  it ('should render correctly ',()=>{
-        expect(wrapper).toMatchSnapshot();
+  it('should render correctly ', () => {
+    expect(wrapper).toMatchSnapshot()
   })
   it('should render one <GameGrid>', () => {
-      expect(wrapper.find('GameGrid')).toHaveLength(1);
-  });
-});
+    expect(wrapper.find('GameGrid')).toHaveLength(1)
+  })
+})

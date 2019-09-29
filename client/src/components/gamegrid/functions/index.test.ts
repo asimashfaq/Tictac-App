@@ -1,4 +1,4 @@
-import { InitalizeGame } from './Functions'
+import { InitalizeGame } from './index'
 describe('InitalizeGame action will generate the random data ', () => {
   it('Should Initalize with Random Data', () => {
     const data = InitalizeGame()

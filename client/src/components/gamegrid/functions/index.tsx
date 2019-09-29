@@ -1,3 +1,5 @@
+import { addGamePlay } from '../../../redux/gamePlay/add/api/'
+
 export const InitalizeGame = (): Game => {
   const Player: number = (new Date().getTime() + Math.random()) % 2 > 1.3 ? 1 : 2
   const Letter: string =
@@ -16,4 +18,7 @@ export const InitalizeGame = (): Game => {
     replyModalVisible: false,
     drawModalVisible: false,
   }
+}
+export const saveGamePlay = (data: any) => async (dispatch: any) => {
+  await dispatch(addGamePlay(data))
 }

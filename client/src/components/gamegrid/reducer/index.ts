@@ -1,4 +1,4 @@
-import { InitalizeGame } from '../functions/Functions'
+import { InitalizeGame } from '../functions'
 
 export const GAME_INITIALS: Game = InitalizeGame()
 

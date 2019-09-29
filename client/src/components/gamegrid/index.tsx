@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux'
 import { Layout, Row, Col, Card, Typography } from 'antd'
 import GameBox from '../gamebox/gamebox'
 import './gamegrid.scss'
-import { InitalizeGame } from './functions/Functions'
+import { InitalizeGame, saveGamePlay } from './functions'
 import GameModal from '../gamemodal/GameModal'
-import { addGamePlay } from '../../redux/gamePlay/add/api'
 import { CheckWinner } from '../../shared/tictac/functions'
 import { GAME_INITIALS, gameReducer } from './reducer'
+import { addGamePlay } from '../../redux/gamePlay/add/api'
 
 const { Text } = Typography
 
@@ -40,7 +40,7 @@ const GameGrid = () => {
     boxRefs[boxId].buttonNode.innerHTML = `<span>${boxValue}</span>`
     boxRefs[boxId].buttonNode.disabled = true
   }
-  const saveGamePlay = useCallback(
+  const saveGame = useCallback(
     (draw: boolean, player: string) => {
       sdispatch(
         addGamePlay({
@@ -62,27 +62,20 @@ const GameGrid = () => {
       const result: Winner = CheckWinner(state.boxes)
       if (!result.draw && state.winnerPlayer === 0) {
         dispatch({ type: 'winner', payload: result.player })
-        saveGamePlay(false, result.player.toString())
+        saveGame(false, result.player.toString())
       }
     } else if (state.step === 9) {
       const result: Winner = CheckWinner(state.boxes)
       if (!result.draw && state.winnerPlayer === 0) {
         dispatch({ type: 'winner', payload: result.player })
-        saveGamePlay(false, result.player.toString())
+        saveGame(false, result.player.toString())
       } else {
         dispatch({ type: 'draw' })
-        saveGamePlay(true, '0')
+        saveGame(true, '0')
       }
     }
     return () => {}
-  }, [
-    state.boxes,
-    state.replay,
-    state.drawModalVisible,
-    state.winnerPlayer,
-    state.step,
-    saveGamePlay,
-  ])
+  }, [state.boxes, state.replay, state.drawModalVisible, state.winnerPlayer, state.step, saveGame])
 
   useEffect(() => {
     if (state.replay) {
