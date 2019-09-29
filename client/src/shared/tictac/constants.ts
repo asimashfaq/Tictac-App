@@ -1,7 +1,3 @@
-import { InitalizeGame } from '../functions/Functions'
-
-export const GAME_INITIALS: Game = InitalizeGame()
-
 export const SuccessPattrens: number[][] = [
   [0, 1, 2],
   [3, 4, 5],

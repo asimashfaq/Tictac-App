@@ -5,69 +5,71 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getGamePlay } from '../../redux/gamePlay/get/api'
 import GameBox from '../../components/gamebox/gamebox'
 import './gamePlay.scss'
-import { getGamePlayReset } from '../../redux/gamePlay/get/actions';
+import { getGamePlayReset } from '../../redux/gamePlay/get/actions'
 const { Text } = Typography
-const waitFor = (ms:any) => new Promise(r => setTimeout(r, ms))
-const asyncForEach = async (array:any, callback:any) => {
+const waitFor = (ms: any) => new Promise(r => setTimeout(r, ms))
+const asyncForEach = async (array: any, callback: any) => {
   for (let index = 0; index < array.length; index++) {
     await callback(array[index], index, array)
   }
 }
 
 let animateDelay = 800
-const boxRefs:any =[]
-const items:any = []
+const boxRefs: any = []
+const items: any = []
 const GamePlay = ({ match }: any) => {
- 
   const sState = useSelector((state: any) => state.gameplay.get)
   const { data } = sState
   const sdispatch = useDispatch()
 
   useEffect(() => {
     sdispatch(getGamePlay(match.params.id))
-    return function cleanup(){
+    return function cleanup() {
       sdispatch(getGamePlayReset())
     }
-  }, [sdispatch,match])
- 
-  const animateGame = useCallback(() => {
-    return new Promise( async res => {
+  }, [sdispatch, match])
 
-      await asyncForEach(data.boxes,async (box: Box, index: number) => {
+  const animateGame = useCallback(() => {
+    return new Promise(async res => {
+      await asyncForEach(data.boxes, async (box: Box, index: number) => {
         updateBoxUI(box.id, box.value)
-        if(index< data.boxes.length -1 )
-        {
+        if (index < data.boxes.length - 1) {
           await waitFor(animateDelay)
         }
       })
       res()
     })
-  }, [ data.boxes])
-  const updateBoxUI =  (boxId: string, boxValue: string) => {
-    boxRefs[boxId].buttonNode.innerHTML  = `<span>${boxValue}</span>`
+  }, [data.boxes])
+  const updateBoxUI = (boxId: string, boxValue: string) => {
+    boxRefs[boxId].buttonNode.innerHTML = `<span>${boxValue}</span>`
     boxRefs[boxId].buttonNode.disabled = true
   }
-  useEffect(()=>{
-   if(data.boxes.length>0){
-      animateGame().then(()=>{
+  useEffect(() => {
+    if (data.boxes.length > 0) {
+      animateGame().then(() => {
         waitFor(500).then(() => {
-          alert("Replay End")
-         
+          alert('Replay End')
         })
       })
     }
-   
-  },[data.boxes, animateGame])
+  }, [data.boxes, animateGame])
 
   // tslint:disable-next-line: no-increment-decrement
-  if(items.length == 0){
+  if (items.length === 0) {
     for (let i = 0; i < 9; i++) {
-      items.push(<GameBox
-        ref={(input:any)=> { boxRefs[`box${i}`] = input}}
-        key={`box${i}`} id={`box${i}`} callback={() => {}} />)
+      items.push(
+        <GameBox
+          ref={(input: any) => {
+            boxRefs[`box${i}`] = input
+          }}
+          key={`box${i}`}
+          id={`box${i}`}
+          callback={() => {}}
+        />
+      )
     }
   }
-  
+
   return (
     <div>
       {sState.fetching === false ? (
