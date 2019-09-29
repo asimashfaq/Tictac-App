@@ -19,6 +19,3 @@ export const InitalizeGame = (): Game => {
     drawModalVisible: false,
   }
 }
-export const saveGamePlay = (data: any) => async (dispatch: any) => {
-  await dispatch(addGamePlay(data))
-}

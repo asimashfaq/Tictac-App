@@ -12,18 +12,21 @@ interface Props {
 const GameModal = (state: Props) => {
   return (
     <Modal title="" footer={[]} visible={state.visible}>
-      <Result key="result_modal"
+      <Result
+        key="result_modal"
         status={state.mstatus === 'success' ? 'success' : 'info'}
         title={state.title}
         subTitle={state.subtitle}
         extra={[
-          <Button type="primary" key="play_again" onClick={state.playagain}>
+          <Button id="play_again" type="primary" key="play_again" onClick={state.playagain}>
             Play Again
           </Button>,
-          <Button type="primary" key="replay" onClick={state.replay}>
+          <Button id="replay" type="primary" key="replay" onClick={state.replay}>
             RePlay
           </Button>,
-          <Link key="history" to="/history">View History</Link>
+          <Link key="history" to="/history">
+            View History
+          </Link>,
         ]}
       />
     </Modal>

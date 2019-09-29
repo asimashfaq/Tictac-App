@@ -1,7 +1,20 @@
 import { InitalizeGame } from '../functions'
 
 export const GAME_INITIALS: Game = InitalizeGame()
-
+export const GAME_INITIALS_STATIC: Game = {
+  boxes: [],
+  player: 1,
+  letter: 'x',
+  player1: 'x',
+  player2: 'o',
+  step: 1,
+  loading: false,
+  successModalVisible: false,
+  winnerPlayer: 0,
+  replay: false,
+  replyModalVisible: false,
+  drawModalVisible: false,
+}
 export const gameReducer = (state: any, action: any) => {
   switch (action.type) {
     case 'reset':
@@ -48,14 +61,6 @@ export const gameReducer = (state: any, action: any) => {
         ...state,
         replyModalVisible: true,
         replay: false,
-      }
-    }
-    case 'disable': {
-      const bDisable: boolean[] = state.buttonDisable
-      bDisable[action.payload] = true
-      return {
-        ...state,
-        buttonDisable: bDisable,
       }
     }
     default: {
