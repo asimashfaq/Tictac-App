@@ -162,7 +162,6 @@ const GameGrid = () => {
           restUI()
         }}
         replay={e => {
-          console.log('in success component')
           dispatch({ type: 'replay' })
         }}
         visible={state.successModalVisible}
@@ -187,11 +186,11 @@ const GameGrid = () => {
         title={'Reply End'}
         subtitle={``}
         playagain={e => {
-          console.log('in warning component')
           dispatch({ type: 'reset', payload: InitalizeGame() })
           restUI()
         }}
         replay={e => {
+          console.log("Did i fire")
           dispatch({ type: 'replay' })
         }}
         visible={state.replyModalVisible}

@@ -19,7 +19,8 @@
     "react-scripts": "3.1.1",
     "redux-thunk": "^2.3.0",
     "sinon": "^7.5.0",
-    "typescript": "3.6.3"
+    "typescript": "3.6.3",
+    "wait-for-expect": "^3.0.0"
   },
   "scripts": {
     "watch:css": "npm run build:css && node-sass src/styles/sass -o src/styles/css --watch --recursive",
