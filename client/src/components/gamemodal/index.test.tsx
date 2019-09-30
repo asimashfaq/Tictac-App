@@ -41,6 +41,4 @@ describe('GameModal', () => {
   it('renders', () => {
     expect(wrapper)
   })
-
- 
 })

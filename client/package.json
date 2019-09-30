@@ -28,7 +28,7 @@
     "start:js": "react-scripts start",
     "start": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && npm-run-all -p tslint-check  start:js",
     "build": "react-scripts build",
-    "test": "jest  --watchAll --verbose false",
+    "test": "jest  --watchAll --verbose ",
     "test:watch": "jest --watchAll --verbose",
     "test:coverage": "jest --verbose --coverage",
     "eject": "react-scripts eject"
@@ -61,6 +61,7 @@
     "@types/react-router-dom": "^4.3.5",
     "@types/redux-mock-store": "^1.0.1",
     "@types/sinon": "^7.0.13",
+    "async-enzyme-helpers": "^1.1.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.4.0",

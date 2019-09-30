@@ -8,18 +8,14 @@ import GameModal from '../gamemodal/GameModal'
 import { CheckWinner } from '../../shared/tictac/functions'
 import { GAME_INITIALS, gameReducer } from './reducer'
 import { addGamePlay } from '../../redux/gamePlay/add/api'
+import { waitFor, asyncForEach } from '../../shared/functions'
 
 const { Text } = Typography
 
 let animateDelay = 800
 let firstload = true
 const boxRefs: any = []
-const waitFor = (ms: any) => new Promise(r => setTimeout(r, ms))
-const asyncForEach = async (array: any, callback: any) => {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array)
-  }
-}
+
 const GameGrid = () => {
   const [state, dispatch] = useReducer(gameReducer, GAME_INITIALS)
 
@@ -28,7 +24,8 @@ const GameGrid = () => {
   const animateGame = useCallback(() => {
     return new Promise(async res => {
       await asyncForEach(state.boxes, async (box: Box, index: number) => {
-        updateBoxUI(box.id, box.value)
+        boxRefs[box.id].buttonNode.innerHTML = `<span>${box.value}</span>`
+        boxRefs[box.id].buttonNode.disabled = true
         if (index < state.boxes.length - 1) {
           await waitFor(animateDelay)
         }
@@ -36,10 +33,6 @@ const GameGrid = () => {
       res()
     })
   }, [state.boxes])
-  const updateBoxUI = (boxId: string, boxValue: string) => {
-    boxRefs[boxId].buttonNode.innerHTML = `<span>${boxValue}</span>`
-    boxRefs[boxId].buttonNode.disabled = true
-  }
   const saveGame = useCallback(
     (draw: boolean, player: string) => {
       sdispatch(
@@ -60,13 +53,13 @@ const GameGrid = () => {
     }
     if (state.step >= 5 && state.step < 9) {
       const result: Winner = CheckWinner(state.boxes)
-      if (!result.draw && state.winnerPlayer === 0) {
+      if (result.draw == false && state.winnerPlayer === 0) {
         dispatch({ type: 'winner', payload: result.player })
         saveGame(false, result.player.toString())
       }
     } else if (state.step === 9) {
       const result: Winner = CheckWinner(state.boxes)
-      if (!result.draw && state.winnerPlayer === 0) {
+      if (result.draw == false && state.winnerPlayer === 0) {
         dispatch({ type: 'winner', payload: result.player })
         saveGame(false, result.player.toString())
       } else {
@@ -86,18 +79,17 @@ const GameGrid = () => {
           dispatch({ type: 'replay_end' })
         })
       })
-      // start animation
     }
     return
-  }, [state.replay, animateGame])
-  useLayoutEffect(() => {
+  }, [state.replay,animateGame])
+  /* useLayoutEffect(() => {
     if (!firstload) {
       dispatch({ type: 'reset', payload: InitalizeGame() })
       restUI()
       return
     }
     firstload = false
-  }, [])
+  }, [])*/
   const restUI = () => {
     // tslint:disable-next-line: no-increment-decrement
     for (let i: number = 0; i < 9; i++) {
@@ -170,6 +162,7 @@ const GameGrid = () => {
           restUI()
         }}
         replay={e => {
+          console.log('in success component')
           dispatch({ type: 'replay' })
         }}
         visible={state.successModalVisible}
@@ -194,6 +187,7 @@ const GameGrid = () => {
         title={'Reply End'}
         subtitle={``}
         playagain={e => {
+          console.log('in warning component')
           dispatch({ type: 'reset', payload: InitalizeGame() })
           restUI()
         }}

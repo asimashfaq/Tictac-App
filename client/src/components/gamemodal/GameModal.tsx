@@ -18,10 +18,15 @@ const GameModal = (state: Props) => {
         title={state.title}
         subTitle={state.subtitle}
         extra={[
-          <Button id="play_again" type="primary" key="play_again" onClick={state.playagain}>
+          <Button
+            id={`${state.mstatus}play_again`}
+            type="primary"
+            key="play_again"
+            onClick={state.playagain}
+          >
             Play Again
           </Button>,
-          <Button id="replay" type="primary" key="replay" onClick={state.replay}>
+          <Button id={`${state.mstatus}replay`} type="primary" key="replay" onClick={state.replay}>
             RePlay
           </Button>,
           <Link key="history" to="/history">

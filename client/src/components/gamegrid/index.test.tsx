@@ -8,17 +8,23 @@ import GameModal from '../gamemodal/GameModal'
 import thunk from 'redux-thunk'
 jest.mock('../../redux/gamePlay/add/api')
 import { MemoryRouter } from 'react-router-dom'
+import { act } from '@testing-library/react'
+import { ExceptionMap } from 'antd/lib/result'
 
 const middlewares = [thunk]
 
 const mockStore = configureMockStore(middlewares)
 
 let store: any
-let wrapper: any
+jest.mock('../../shared/functions/')
 
 describe('GameGrid', () => {
+  let wrapper: any
+
   beforeEach(() => {
     store = mockStore({})
+    //
+
     wrapper = mount(
       <Provider store={store}>
         <MemoryRouter>
@@ -26,9 +32,10 @@ describe('GameGrid', () => {
         </MemoryRouter>
       </Provider>
     )
+    wrapper.update()
   })
   afterEach(() => {
-    wrapper.unmount()
+    //wrapper.unmount()
   })
 
   it('renders', () => {
@@ -44,84 +51,297 @@ describe('GameGrid', () => {
     const text = wrapper.find('button#box0').text()
     expect(text == 'o' || text == 'x').toBeTruthy()
   })
+
+  it('should not call the replay at start', () => {
+    expect(wrapper.find('button#replay').length).toEqual(0)
+  })
+  it('should not call the play_again at start', () => {
+    expect(wrapper.find('button#play_again').length).toEqual(0)
+  })
+  /********************/
+
   it('should win the game', () => {
     wrapper.props().store.dispatch = jest.fn()
     // wrapper.update()
-    
-    //  TODO: Move similar simulations to a separate function, and put
-    //  that func in beforeEach so that it mocks the data everyhtime
-    //  a test case run
 
-    wrapper.find('button#box0').simulate('click')
-    wrapper.find('button#box1').simulate('click')
-    wrapper.find('button#box2').simulate('click')
-    wrapper.find('button#box3').simulate('click')
-    wrapper.find('button#box4').simulate('click')
-    wrapper.find('button#box5').simulate('click')
-    wrapper.find('button#box6').simulate('click')
+    act(() => {
+      wrapper.find('button#box0').simulate('click')
+    })
+
+    act(() => {
+      wrapper.find('button#box1').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box2').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box3').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box4').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box5').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box6').simulate('click')
+    })
+    wrapper.update()
     expect(
       wrapper.find('.ant-result-subtitle').text() == `Player 1 Wins` ||
         wrapper.find('.ant-result-subtitle').text() == `Player 2 Wins`
     )
   })
+  it('should win the game and replay', async done => {
+    wrapper.props().store.dispatch = jest.fn(() => {
+      console.log('in dispatch mock')
+    })
+    act(() => {
+      wrapper.find('button#box0').simulate('click')
+    })
 
-  it('should win the game with 9 steps', () => {
-    wrapper.props().store.dispatch = jest.fn()
-    // wrapper.update()
-    
-    //  TODO: Move similar simulations to a separate function, and put
-    //  that func in beforeEach so that it mocks the data everyhtime
-    //  a test case run
+    act(() => {
+      wrapper.find('button#box1').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box2').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box3').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box4').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box5').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box6').simulate('click')
+    })
+    wrapper.update()
+    act(() => {
+      wrapper.find('button#successreplay').simulate('click')
+    })
+    wrapper.update()
 
-    wrapper.find('button#box0').simulate('click')
-    wrapper.find('button#box8').simulate('click')
-    wrapper.find('button#box2').simulate('click')
-    wrapper.find('button#box6').simulate('click')
-    wrapper.find('button#box4').simulate('click')
-    wrapper.find('button#box5').simulate('click')
-    wrapper.find('button#box7').simulate('click')
-    wrapper.find('button#box3').simulate('click')
-    wrapper.find('button#box1').simulate('click')
-    expect(
-      wrapper.find('.ant-result-subtitle').text() == `Player 1 Wins` ||
-        wrapper.find('.ant-result-subtitle').text() == `Player 2 Wins`
-    )
-  })
+    expect(wrapper.find('button#box1').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box2').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box3').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box4').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box5').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box6').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box7').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box8').text() == '-').toBeTruthy()
 
-  it('should win the game and reply', () => {
-    wrapper.props().store.dispatch = jest.fn()
-    
-    wrapper.find('button#box0').simulate('click')
-    wrapper.find('button#box1').simulate('click')
-    wrapper.find('button#box2').simulate('click')
-    wrapper.find('button#box3').simulate('click')
-    wrapper.find('button#box4').simulate('click')
-    wrapper.find('button#box5').simulate('click')
-    wrapper.find('button#box6').simulate('click')
-
-    wrapper.find('button#replay').simulate('click')
-
-  })
-
-  it('should win the game and playagain', () => {
-    wrapper.props().store.dispatch = jest.fn()
-    wrapper.find('button#box0').simulate('click')
-    wrapper.find('button#box1').simulate('click')
-    wrapper.find('button#box2').simulate('click')
-    wrapper.find('button#box3').simulate('click')
-    wrapper.find('button#box4').simulate('click')
-    wrapper.find('button#box5').simulate('click')
-    wrapper.find('button#box6').simulate('click')
+    wrapper.update()
+    // expect.assertions(17)
     setTimeout(() => {
-      wrapper.find('button#play_again').simulate('click')
-   
-    }, 500);
-  
+      let text = wrapper.find('button#box0').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box1').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box2').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box3').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box4').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box5').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box6').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      wrapper.update()
+      expect(wrapper.find('.ant-result-info>.ant-result-title').text()).toEqual('Reply End')
+
+      done()
+    }, 10)
+    expect.assertions(16)
+  })
+  it('should win the game,reply the game and play again', async done => {
+    wrapper.props().store.dispatch = jest.fn(() => {
+      console.log('in dispatch mock')
+    })
+    act(() => {
+      wrapper.find('button#box0').simulate('click')
+    })
+
+    act(() => {
+      wrapper.find('button#box1').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box2').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box3').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box4').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box5').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box6').simulate('click')
+    })
+    wrapper.update()
+    act(() => {
+      wrapper.find('button#successreplay').simulate('click')
+    })
+    wrapper.update()
+
+    expect(wrapper.find('button#box1').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box2').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box3').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box4').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box5').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box6').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box7').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box8').text() == '-').toBeTruthy()
+
+    wrapper.update()
+    // expect.assertions(17)
+    setTimeout(() => {
+      let text = wrapper.find('button#box0').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box1').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box2').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box3').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box4').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box5').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box6').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      wrapper.update()
+      expect(wrapper.find('.ant-result-info>.ant-result-title').text()).toEqual('Reply End')
+      act(() => {
+        wrapper.find('button#warningplay_again').simulate('click')
+      })
+      wrapper.update()
+      expect(wrapper.find('button#box1').text() == '-').toBeTruthy()
+      done()
+    }, 10)
+    expect.assertions(17)
+  })
+  it('should win the game,replay the game and replay again', async done => {
+    wrapper.props().store.dispatch = jest.fn(() => {
+      console.log('in dispatch mock')
+    })
+    act(() => {
+      wrapper.find('button#box0').simulate('click')
+    })
+
+    act(() => {
+      wrapper.find('button#box1').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box2').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box3').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box4').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box5').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box6').simulate('click')
+    })
+    wrapper.update()
+    act(() => {
+      wrapper.find('button#successreplay').simulate('click')
+    })
+    wrapper.update()
+
+    expect(wrapper.find('button#box1').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box2').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box3').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box4').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box5').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box6').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box7').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box8').text() == '-').toBeTruthy()
+
+    wrapper.update()
+    // expect.assertions(17)
+    setTimeout(() => {
+      let text = wrapper.find('button#box0').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box1').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box2').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box3').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box4').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box5').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box6').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      wrapper.update()
+      expect(wrapper.find('.ant-result-info>.ant-result-title').text()).toEqual('Reply End')
+      act(() => {
+        wrapper.find('button#warningreplay').simulate('click')
+      })
+      wrapper.update()
+      expect(wrapper.find('button#box1').text() == '-').toBeTruthy()
+      done()
+    }, 10)
+    expect.assertions(17)
+  })
+  it('should win the game and playagain', async done => {
+    wrapper.props().store.dispatch = jest.fn(() => {
+      console.log('in dispatch mock')
+    })
+    act(() => {
+      wrapper.find('button#box0').simulate('click')
+    })
+
+    act(() => {
+      wrapper.find('button#box1').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box2').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box3').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box4').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box5').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box6').simulate('click')
+    })
+    wrapper.update()
+    act(() => {
+      wrapper.find('button#successplay_again').simulate('click')
+    })
+    wrapper.update()
+
+    expect(wrapper.find('button#box1').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box2').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box3').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box4').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box5').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box6').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box7').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box8').text() == '-').toBeTruthy()
+    wrapper.update()
+    expect.assertions(8)
+    done()
   })
 
-
-
-  it('should draw the game', () => {
+  /********************/
+  /* it('should draw the game', () => {
     wrapper.props().store.dispatch = jest.fn()
     // wrapper.update()
     wrapper.find('button#box0').simulate('click')
@@ -148,8 +368,59 @@ describe('GameGrid', () => {
     wrapper.find('button#box7').simulate('click')
     wrapper.find('button#box6').simulate('click')
     wrapper.find('button#box4').simulate('click')
+
     expect(wrapper.find('.ant-result-subtitle').text() == `Both players failed`)
-    wrapper.find('button#replay').simulate('click')
+
+    act(() => {
+      wrapper.find('button#errorreplay').simulate('click')
+      jest.runAllTimers()
+      expect(wrapper.find('.ant-result-subtitle').text() == `Reply End`)
+    })
+  })
+
+  it('should draw the game,reply the game and play again ', () => {
+    wrapper.props().store.dispatch = jest.fn()
+
+    wrapper.find('button#box0').simulate('click')
+    wrapper.find('button#box8').simulate('click')
+    wrapper.find('button#box2').simulate('click')
+    wrapper.find('button#box1').simulate('click')
+    wrapper.find('button#box5').simulate('click')
+    wrapper.find('button#box3').simulate('click')
+    wrapper.find('button#box7').simulate('click')
+    wrapper.find('button#box6').simulate('click')
+    wrapper.find('button#box4').simulate('click')
+
+    act(() => {
+      wrapper.find('button#errorreplay').simulate('click')
+      jest.runAllTimers()
+      expect(wrapper.find('.ant-result-subtitle').text() == `Reply End`)
+      wrapper.find('button#warningplay_again').simulate('click')
+      expect(wrapper.find('button#box0').text() == '-').toBeTruthy()
+    })
+  })
+
+  it('should win the game,replay the game and replay again', () => {
+    wrapper.props().store.dispatch = jest.fn()
+
+    wrapper.find('button#box0').simulate('click')
+    wrapper.find('button#box8').simulate('click')
+    wrapper.find('button#box2').simulate('click')
+    wrapper.find('button#box1').simulate('click')
+    wrapper.find('button#box5').simulate('click')
+    wrapper.find('button#box3').simulate('click')
+    wrapper.find('button#box7').simulate('click')
+    wrapper.find('button#box6').simulate('click')
+    wrapper.find('button#box4').simulate('click')
+
+    act(() => {
+      wrapper.find('button#errorreplay').simulate('click')
+      jest.runAllTimers()
+      expect(wrapper.find('.ant-result-subtitle').text() == `Reply End`)
+      wrapper.find('button#warningreplay').simulate('click')
+      jest.runAllTimers()
+      expect(wrapper.find('.ant-result-subtitle').text() == `Reply End`)
+    })
   })
 
   it('should draw the game and play again', () => {
@@ -165,23 +436,116 @@ describe('GameGrid', () => {
     wrapper.find('button#box6').simulate('click')
     wrapper.find('button#box4').simulate('click')
     expect(wrapper.find('.ant-result-subtitle').text() == `Both players failed`)
-    wrapper.find('button#play_again').simulate('click')
+    act(() => {
+      wrapper.find('button#errorplay_again').simulate('click')
+      expect(wrapper.find('button#box0').text() == '-').toBeTruthy()
+    })
+  })*/
+})
+
+/*
+describe('GameGrid with 9 Steps', () => {
+  let wrapper: any
+
+  beforeEach(() => {
+    store = mockStore({})
+    //
+
+    wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter>
+          <GameGrid />
+        </MemoryRouter>
+      </Provider>
+    )
+    wrapper.update()
+  })
+  afterEach(() => {
+    //wrapper.unmount()
   })
 
 
 
-  it('should show replay of game', () => {
+
+  it('should win the game with 9 steps', async done => {
     wrapper.props().store.dispatch = jest.fn()
-    // wrapper.update()
-    wrapper.find('button#box0').simulate('click')
-    wrapper.find('button#box1').simulate('click')
-    wrapper.find('button#box2').simulate('click')
-    wrapper.find('button#box3').simulate('click')
-    wrapper.find('button#box4').simulate('click')
-    wrapper.find('button#box5').simulate('click')
-    wrapper.find('button#box6').simulate('click')
+
+    act(() => {
+      wrapper.find('button#box0').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box8').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box2').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box6').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box4').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box5').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box7').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box3').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box1').simulate('click')
+    })
+    wrapper.update()
+    expect(
+      wrapper.find('.ant-result-subtitle').text() == `Player 1 Wins` ||
+        wrapper.find('.ant-result-subtitle').text() == `Player 2 Wins`
+    )
+  })
+
+  it('should win the game and reply with 9 steps', async done => {
+    wrapper.props().store.dispatch = jest.fn()
+    act(() => {
+      wrapper.find('button#box0').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box8').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box2').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box6').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box4').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box5').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box7').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box3').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box1').simulate('click')
+    })
+    wrapper.update()
+    expect(wrapper.find('button#box1').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box2').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box3').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box4').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box5').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box6').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box7').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box8').text() == '-').toBeTruthy()
+
+    wrapper.update()
+    // expect.assertions(17)
     setTimeout(() => {
-      wrapper.find('button#replay').simulate('click')
       let text = wrapper.find('button#box0').text()
       expect(text == 'o' || text == 'x').toBeTruthy()
       text = wrapper.find('button#box1').text()
@@ -196,32 +560,220 @@ describe('GameGrid', () => {
       expect(text == 'o' || text == 'x').toBeTruthy()
       text = wrapper.find('button#box6').text()
       expect(text == 'o' || text == 'x').toBeTruthy()
-      expect(wrapper.find('.ant-result-subtitle').text() == `Reply End`)
-    }, 500)
+      text = wrapper.find('button#box7').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box8').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      wrapper.update()
+      expect(wrapper.find('.ant-result-info>.ant-result-title').text()).toEqual('Reply End')
+
+      done()
+    }, 10)
+    expect.assertions(18)
   })
 
-
-
-  it('should reset the UI', () => {
+  it('should win the game,reply the game and play again with 9 steps', async done => {
     wrapper.props().store.dispatch = jest.fn()
-    // wrapper.update()
-    wrapper.find('button#box0').simulate('click')
-    wrapper.find('button#box1').simulate('click')
-    wrapper.find('button#box2').simulate('click')
-    wrapper.find('button#box3').simulate('click')
-    wrapper.find('button#box4').simulate('click')
-    wrapper.find('button#box5').simulate('click')
-    wrapper.find('button#box6').simulate('click')
-    
+    act(() => {
+      wrapper.find('button#box0').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box8').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box2').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box6').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box4').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box5').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box7').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box3').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box1').simulate('click')
+    })
+    wrapper.update()
+
+    act(() => {
+      wrapper.find('button#successreplay').simulate('click')
+    })
+    wrapper.update()
+
+    expect(wrapper.find('button#box1').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box2').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box3').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box4').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box5').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box6').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box7').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box8').text() == '-').toBeTruthy()
+
+    wrapper.update()
+    // expect.assertions(17)
     setTimeout(() => {
-      wrapper.find('button#play_again').simulate('click')
-      expect(wrapper.find('button#box0').text() == '-').toBeTruthy()
+      let text = wrapper.find('button#box0').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box1').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box2').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box3').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box4').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box5').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box6').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box7').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box8').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      wrapper.update()
+      expect(wrapper.find('.ant-result-info>.ant-result-title').text()).toEqual('Reply End')
+      act(() => {
+        wrapper.find('button#warningplay_again').simulate('click')
+      })
+      wrapper.update()
       expect(wrapper.find('button#box1').text() == '-').toBeTruthy()
-      expect(wrapper.find('button#box2').text() == '-').toBeTruthy()
-      expect(wrapper.find('button#box3').text() == '-').toBeTruthy()
-      expect(wrapper.find('button#box4').text() == '-').toBeTruthy()
-      expect(wrapper.find('button#box5').text() == '-').toBeTruthy()
-      expect(wrapper.find('button#box6').text() == '-').toBeTruthy()
-    }, 500)
+      done()
+    }, 10)
+    expect.assertions(19)
+  })
+
+  it('should win the game,replay the game and replay again with 9 steps', async done => {
+    wrapper.props().store.dispatch = jest.fn()
+
+    act(() => {
+      wrapper.find('button#box0').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box8').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box2').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box6').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box4').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box5').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box7').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box3').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box1').simulate('click')
+    })
+    wrapper.update()
+
+    act(() => {
+      wrapper.find('button#successreplay').simulate('click')
+    })
+    wrapper.update()
+
+    expect(wrapper.find('button#box1').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box2').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box3').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box4').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box5').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box6').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box7').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box8').text() == '-').toBeTruthy()
+
+    wrapper.update()
+    // expect.assertions(17)
+    setTimeout(() => {
+      let text = wrapper.find('button#box0').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box1').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box2').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box3').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box4').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box5').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box6').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box7').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      text = wrapper.find('button#box8').text()
+      expect(text == 'o' || text == 'x').toBeTruthy()
+      wrapper.update()
+      expect(wrapper.find('.ant-result-info>.ant-result-title').text()).toEqual('Reply End')
+      act(() => {
+        wrapper.find('button#warningreplay').simulate('click')
+      })
+      wrapper.update()
+      expect(wrapper.find('button#box1').text() == '-').toBeTruthy()
+      done()
+    }, 10)
+    expect.assertions(19)
+  })
+
+  it('should win the game and playagain with 9 steps', async done => {
+    wrapper.props().store.dispatch = jest.fn()
+    act(() => {
+      wrapper.find('button#box0').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box8').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box2').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box6').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box4').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box5').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box7').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box3').simulate('click')
+    })
+    act(() => {
+      wrapper.find('button#box1').simulate('click')
+    })
+    wrapper.update()
+    act(() => {
+      wrapper.find('button#successplay_again').simulate('click')
+    })
+    wrapper.update()
+
+    expect(wrapper.find('button#box1').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box2').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box3').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box4').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box5').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box6').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box7').text() == '-').toBeTruthy()
+    expect(wrapper.find('button#box8').text() == '-').toBeTruthy()
+    expect.assertions(8)
+    done()
   })
 })
+*/

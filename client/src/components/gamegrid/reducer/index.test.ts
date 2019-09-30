@@ -52,7 +52,7 @@ describe(`gamereducer`, () => {
     })
 
     expect(reducer).toEqual({
-      step: 1,
+      step: 0,
       letter: '-',
       player: 0,
       player1: 'x',
@@ -72,7 +72,7 @@ describe(`gamereducer`, () => {
     })
 
     expect(reducer).toEqual({
-      step: 1,
+      step: 0,
       letter: '-',
       player: 0,
       player1: 'x',
@@ -93,7 +93,7 @@ describe(`gamereducer`, () => {
     })
 
     expect(reducer).toEqual({
-      step: 1,
+      step: 0,
       letter: 'x',
       player: 1,
       player1: 'x',
@@ -114,7 +114,7 @@ describe(`gamereducer`, () => {
     })
 
     expect(reducer).toEqual({
-      step: 1,
+      step: 0,
       letter: 'x',
       player: 1,
       player1: 'x',
