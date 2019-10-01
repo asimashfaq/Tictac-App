@@ -1,10 +1,10 @@
-import React, { useReducer, useEffect, useCallback, useLayoutEffect } from 'react'
+import React, { useReducer, useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { Layout, Row, Col, Card, Typography } from 'antd'
 import GameBox from '../gamebox/gamebox'
 import './gamegrid.scss'
 import { InitalizeGame } from './functions'
-import GameModal from '../gamemodal/GameModal'
+import GameModal from '../gamemodal/index'
 import { CheckWinner } from '../../shared/tictac/functions'
 import { GAME_INITIALS, gameReducer } from './reducer'
 import { addGamePlay } from '../../redux/gamePlay/add/api'
@@ -13,7 +13,6 @@ import { waitFor, asyncForEach } from '../../shared/functions'
 const { Text } = Typography
 
 let animateDelay = 800
-let firstload = true
 const boxRefs: any = []
 
 const GameGrid = () => {
@@ -53,13 +52,13 @@ const GameGrid = () => {
     }
     if (state.step >= 5 && state.step < 9) {
       const result: Winner = CheckWinner(state.boxes)
-      if (result.draw == false && state.winnerPlayer === 0) {
+      if (result.draw === false && state.winnerPlayer === 0) {
         dispatch({ type: 'winner', payload: result.player })
         saveGame(false, result.player.toString())
       }
     } else if (state.step === 9) {
       const result: Winner = CheckWinner(state.boxes)
-      if (result.draw == false && state.winnerPlayer === 0) {
+      if (result.draw === false && state.winnerPlayer === 0) {
         dispatch({ type: 'winner', payload: result.player })
         saveGame(false, result.player.toString())
       } else {
@@ -81,15 +80,7 @@ const GameGrid = () => {
       })
     }
     return
-  }, [state.replay,animateGame])
-  /* useLayoutEffect(() => {
-    if (!firstload) {
-      dispatch({ type: 'reset', payload: InitalizeGame() })
-      restUI()
-      return
-    }
-    firstload = false
-  }, [])*/
+  }, [state.replay, animateGame])
   const restUI = () => {
     // tslint:disable-next-line: no-increment-decrement
     for (let i: number = 0; i < 9; i++) {
@@ -190,7 +181,6 @@ const GameGrid = () => {
           restUI()
         }}
         replay={e => {
-          console.log("Did i fire")
           dispatch({ type: 'replay' })
         }}
         visible={state.replyModalVisible}

@@ -35,7 +35,7 @@ export const gameReducer = (state: any, action: any) => {
         winnerPlayer: action.payload,
         successModalVisible: true,
         player: 0,
-        step:0,
+        step: 0,
         letter: '-',
       }
     }
@@ -45,7 +45,7 @@ export const gameReducer = (state: any, action: any) => {
         winnerPlayer: 0,
         drawModalVisible: true,
         player: 0,
-        step:0,
+        step: 0,
         letter: '-',
       }
     }
@@ -55,7 +55,7 @@ export const gameReducer = (state: any, action: any) => {
         replay: true,
         successModalVisible: false,
         drawModalVisible: false,
-        step:0,
+        step: 0,
         replyModalVisible: false,
       }
     }
@@ -64,7 +64,7 @@ export const gameReducer = (state: any, action: any) => {
         ...state,
         replyModalVisible: true,
         replay: false,
-        step:0,
+        step: 0,
       }
     }
     default: {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Result, Button, Modal } from 'antd'
+import { Result, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import ReactDOM from 'react-dom'
 import './gamemodal.scss'
