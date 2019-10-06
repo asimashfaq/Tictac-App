@@ -6,7 +6,7 @@ export const INITIAL_STATE: any = {
   error: null,
 }
 
-export default (state = INITIAL_STATE, { type, payload }: rProps) => {
+export default (state = INITIAL_STATE, { type, payload }: any) => {
   switch (type) {
     case GET_GAMEPLAYS_REQUEST:
       return { ...state, fetching: true }

@@ -6,13 +6,8 @@ import { getGamePlay } from '../../redux/gamePlay/get/api'
 import GameBox from '../../components/gamebox/gamebox'
 import './gamePlay.scss'
 import { getGamePlayReset } from '../../redux/gamePlay/get/actions'
+import { asyncForEach, waitFor } from '../../shared/functions'
 const { Text } = Typography
-const waitFor = (ms: any) => new Promise(r => setTimeout(r, ms))
-const asyncForEach = async (array: any, callback: any) => {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array)
-  }
-}
 
 let animateDelay = 800
 const boxRefs: any = []

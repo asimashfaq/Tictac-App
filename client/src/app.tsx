@@ -3,7 +3,7 @@ import store, { history } from './redux/store'
 import { ConnectedRouter } from 'connected-react-router'
 import React from 'react'
 import publicRoutes from './configs/routes'
-import { Main } from './pages/main'
+import { Main } from './views/main'
 
 export default () => (
   <Provider store={store}>

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { Table } from 'antd'
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getGamePlays } from '../../redux/gamePlay/list/api'
+import GamePlays from '../../components/gameplays'
+import { Link } from 'react-router-dom'
 
-const GamePlays = () => {
+const GameHistory: React.FC = () => {
   const columns = [
     {
       title: 'ID',
@@ -39,20 +39,21 @@ const GamePlays = () => {
       render: (text: string, record: any) => <Link to={`/replay/${record.id}`}>Replay Game</Link>,
     },
   ]
-  const state = useSelector((state: any) => state.gameplay.list)
+  const state: any = useSelector((state: any) => state.gameplay.list)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getGamePlays())
   }, [dispatch])
   return (
     <React.Fragment>
+      {console.log(state)}
       {state.fetching === false ? (
-        <Table rowKey={record => record.id} dataSource={state.data} columns={columns} />
+        <GamePlays data={state.data} cloumns={columns} />
       ) : (
         <div>Loading</div>
       )}
     </React.Fragment>
   )
 }
-
-export default GamePlays
+export { GameHistory }
+export default GameHistory

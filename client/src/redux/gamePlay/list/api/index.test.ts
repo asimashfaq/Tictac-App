@@ -3,11 +3,6 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { getGamePlays } from './index'
 import { GET_GAMEPLAYS_REQUEST, GET_GAMEPLAYS_SUCCESS, GET_GAMEPLAYS_FAILURE } from '../actions'
-Object.defineProperty(window, '_env_', {
-  writable: true,
-  value: { API_URL: 'http://' },
-})
-
 const mockStore = configureMockStore([thunk])
 describe('User Actions', () => {
   let store: any
@@ -29,6 +24,7 @@ describe('User Actions', () => {
           status: 200,
           response: [
             {
+              id: '1',
               boxes: [
                 {
                   id: 'box0',

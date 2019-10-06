@@ -4,10 +4,10 @@ import thunk from 'redux-thunk'
 import { getGamePlay } from './index'
 import { GET_GAMEPLAY_REQUEST, GET_GAMEPLAY_SUCCESS, GET_GAMEPLAY_FAILURE } from '../actions'
 
-Object.defineProperty(window, '_env_', {
+/*Object.defineProperty(window, '_env_', {
   writable: true,
   value: { API_URL: 'http://' },
-})
+})*/
 
 const mockStore = configureMockStore([thunk])
 describe('User Actions', () => {

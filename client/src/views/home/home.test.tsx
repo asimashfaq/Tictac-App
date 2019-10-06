@@ -1,6 +1,6 @@
 import React from 'react'
 import Home from './index'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 import GameGrid from '../../components/gamegrid'
@@ -9,17 +9,14 @@ const store = mockStore({})
 
 let wrapper: any
 beforeEach(() => {
-  wrapper = shallow(
+  wrapper = mount(
     <Provider store={store}>
       <Home />
     </Provider>
   )
 })
 describe('<Home /> rendering', () => {
-  it('should render correctly ', () => {
-    expect(wrapper).toMatchSnapshot()
-  })
   it('should should have gamegrid ', () => {
-    expect(GameGrid).toHaveLength(1)
+    expect(wrapper.find(GameGrid)).toHaveLength(1)
   })
 })

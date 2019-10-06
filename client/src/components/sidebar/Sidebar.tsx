@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Layout, Menu, Icon, Typography } from 'antd'
 import { Link } from 'react-router-dom'
-import { Context } from '../../pages/main'
+import { Context } from '../../views/main'
 import './Sidebar.scss'
 const { Text } = Typography
 interface Props {
