@@ -1,4 +1,3 @@
-// export const waitFor = (ms: any) =>  console.log('000')
 export const waitFor = (ms: any) =>
   new Promise<any>(r => {
     r()
