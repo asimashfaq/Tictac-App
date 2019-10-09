@@ -11,7 +11,6 @@ import { MemoryRouter } from 'react-router'
 jest.mock('../../redux/gamePlay/list/api')
 let store: any
 let wrapper: any
-const middlewares = [thunk]
 const createMockStore = configureMockStore([thunk])
 
 waitForExpect.defaults.timeout = 55000

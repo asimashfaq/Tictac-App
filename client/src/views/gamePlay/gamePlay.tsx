@@ -7,18 +7,23 @@ import GameBox from '../../components/gamebox/gamebox'
 import './gamePlay.scss'
 import { getGamePlayReset } from '../../redux/gamePlay/get/actions'
 import { asyncForEach, waitFor } from '../../shared/functions'
+import { any } from 'prop-types'
 const { Text } = Typography
-
-let animateDelay = 800
+interface Props {
+  errorMsg: boolean
+  loadingMsg: boolean
+  match: any
+}
+const animateDelay = 800
 const boxRefs: any = []
 const items: any = []
-const GamePlay = ({ match }: any) => {
+const GamePlay: React.FC<Props> = ({ match, errorMsg = false, loadingMsg = false }: Props) => {
   const sState = useSelector((state: any) => state.gameplay.get)
   const { data } = sState
   const sdispatch = useDispatch()
 
   useEffect(() => {
-    sdispatch(getGamePlay(match.params.id))
+    sdispatch(getGamePlay(match.params.id, errorMsg, loadingMsg))
     return function cleanup() {
       sdispatch(getGamePlayReset())
     }
@@ -27,7 +32,8 @@ const GamePlay = ({ match }: any) => {
   const animateGame = useCallback(() => {
     return new Promise(async res => {
       await asyncForEach(data.boxes, async (box: Box, index: number) => {
-        updateBoxUI(box.id, box.value)
+        boxRefs[box.id].buttonNode.innerHTML = `<span>${box.value}</span>`
+        boxRefs[box.id].buttonNode.disabled = true
         if (index < data.boxes.length - 1) {
           await waitFor(animateDelay)
         }
@@ -35,22 +41,21 @@ const GamePlay = ({ match }: any) => {
       res()
     })
   }, [data.boxes])
-  const updateBoxUI = (boxId: string, boxValue: string) => {
-    boxRefs[boxId].buttonNode.innerHTML = `<span>${boxValue}</span>`
-    boxRefs[boxId].buttonNode.disabled = true
-  }
+
   useEffect(() => {
-    if (data.boxes.length > 0) {
-      animateGame().then(() => {
-        waitFor(500).then(() => {
-          alert('Replay End')
+    if (!sState.fetching) {
+      if (data.boxes.length > 0) {
+        animateGame().then(() => {
+          waitFor(500).then(() => {
+            alert('Replay End')
+          })
         })
-      })
+      }
     }
   }, [data.boxes, animateGame])
 
-  // tslint:disable-next-line: no-increment-decrement
   if (items.length === 0) {
+    // tslint:disable-next-line: no-increment-decrement
     for (let i = 0; i < 9; i++) {
       items.push(
         <GameBox
@@ -68,29 +73,33 @@ const GamePlay = ({ match }: any) => {
   return (
     <div>
       {sState.fetching === false ? (
-        <Layout className="gamegrid">
-          <Layout style={{ background: '#ECECEC', padding: '30px' }} />
-          <Row>
-            <Col span={8}>
-              <Card title="Player 1" bordered={false}>
-                {data.player1}
-              </Card>
-            </Col>
-            <Col span={8}>
-              <Card title="Winner" bordered={false}>
-                <Text className="playerturn">Player {data.winner}</Text>
-              </Card>
-            </Col>
-            <Col span={8}>
-              <Card title="Player 2" bordered={false}>
-                {data.player2}
-              </Card>
-            </Col>
-          </Row>
-          <Row>{items}</Row>
-        </Layout>
+        sState.error === null ? (
+          <Layout className="gamegrid">
+            <Layout style={{ background: '#ECECEC', padding: '30px' }} />
+            <Row>
+              <Col span={8}>
+                <Card title="Player 1" bordered={false}>
+                  {data.player1}
+                </Card>
+              </Col>
+              <Col span={8}>
+                <Card title="Winner" bordered={false}>
+                  <Text className="playerturn">Player {data.winner}</Text>
+                </Card>
+              </Col>
+              <Col span={8}>
+                <Card title="Player 2" bordered={false}>
+                  {data.player2}
+                </Card>
+              </Col>
+            </Row>
+            <Row>{items}</Row>
+          </Layout>
+        ) : (
+          <div className="errorMsg">Unable to Load Data</div>
+        )
       ) : (
-        <div>Loading</div>
+        <div className="loadingMsg">Loading</div>
       )}
     </div>
   )

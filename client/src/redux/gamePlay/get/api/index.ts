@@ -3,7 +3,7 @@ import { getGamePlayFailure, getGamePlayStarted, getGamePlaySuccess } from '../a
 
 const globalAny: any = global
 
-export const getGamePlay = (id: string) => {
+export const getGamePlay = (id: string, errorMsg?: boolean, loadingMsg?: boolean) => {
   return async (dispatch: any) => {
     dispatch(getGamePlayStarted())
 

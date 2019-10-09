@@ -1,37 +1,603 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<GamePlay /> rendering should render correctly  1`] = `
-<ContextProvider
-  value={
+<Provider
+  store={
     Object {
-      "store": Object {
-        "clearActions": [Function],
-        "dispatch": [Function],
-        "getActions": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      },
-      "subscription": Subscription {
-        "handleChangeWrapper": [Function],
-        "listeners": Object {
-          "notify": [Function],
-        },
-        "onStateChange": [Function],
-        "parentSub": undefined,
-        "store": Object {
-          "clearActions": [Function],
-          "dispatch": [Function],
-          "getActions": [Function],
-          "getState": [Function],
-          "replaceReducer": [Function],
-          "subscribe": [Function],
-        },
-        "unsubscribe": null,
-      },
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
     }
   }
 >
-  <GamePlay />
-</ContextProvider>
+  <GamePlay
+    errorMsg={false}
+    loadingMsg={false}
+    match={
+      Object {
+        "isExact": true,
+        "params": Object {
+          "id": 1,
+        },
+        "path": "/replay/:id",
+        "url": "/replay/1",
+      }
+    }
+  >
+    <div>
+      <Adapter
+        className="gamegrid"
+      >
+        <BasicLayout
+          className="gamegrid"
+          prefixCls="ant-layout"
+          tagName="section"
+        >
+          <section
+            className="gamegrid ant-layout"
+          >
+            <Adapter
+              style={
+                Object {
+                  "background": "#ECECEC",
+                  "padding": "30px",
+                }
+              }
+            >
+              <BasicLayout
+                prefixCls="ant-layout"
+                style={
+                  Object {
+                    "background": "#ECECEC",
+                    "padding": "30px",
+                  }
+                }
+                tagName="section"
+              >
+                <section
+                  className="ant-layout"
+                  style={
+                    Object {
+                      "background": "#ECECEC",
+                      "padding": "30px",
+                    }
+                  }
+                />
+              </BasicLayout>
+            </Adapter>
+            <Row
+              gutter={0}
+            >
+              <div
+                className="ant-row"
+              >
+                <Col
+                  span={8}
+                >
+                  <div
+                    className="ant-col ant-col-8"
+                  >
+                    <Card
+                      bordered={false}
+                      title="Player 1"
+                    >
+                      <div
+                        className="ant-card"
+                      >
+                        <div
+                          className="ant-card-head"
+                          style={Object {}}
+                        >
+                          <div
+                            className="ant-card-head-wrapper"
+                          >
+                            <div
+                              className="ant-card-head-title"
+                            >
+                              Player 1
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className="ant-card-body"
+                          style={Object {}}
+                        >
+                          1
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </Col>
+                <Col
+                  span={8}
+                >
+                  <div
+                    className="ant-col ant-col-8"
+                  >
+                    <Card
+                      bordered={false}
+                      title="Winner"
+                    >
+                      <div
+                        className="ant-card"
+                      >
+                        <div
+                          className="ant-card-head"
+                          style={Object {}}
+                        >
+                          <div
+                            className="ant-card-head-wrapper"
+                          >
+                            <div
+                              className="ant-card-head-title"
+                            >
+                              Winner
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className="ant-card-body"
+                          style={Object {}}
+                        >
+                          <Text
+                            className="playerturn"
+                          >
+                            <withConfigConsumer(Base)
+                              className="playerturn"
+                              component="span"
+                              ellipsis={false}
+                            >
+                              <Base
+                                className="playerturn"
+                                component="span"
+                                ellipsis={false}
+                                getPrefixCls={[Function]}
+                                prefixCls="ant-typography"
+                                renderEmpty={[Function]}
+                              >
+                                <LocaleReceiver
+                                  componentName="Text"
+                                >
+                                  <ReactResizeObserver
+                                    disabled={true}
+                                    onResize={[Function]}
+                                  >
+                                    <Typography
+                                      aria-label={null}
+                                      className="playerturn"
+                                      component="span"
+                                      setContentRef={[Function]}
+                                      style={
+                                        Object {
+                                          "WebkitLineClamp": null,
+                                        }
+                                      }
+                                    >
+                                      <span
+                                        aria-label={null}
+                                        className="ant-typography playerturn"
+                                        style={
+                                          Object {
+                                            "WebkitLineClamp": null,
+                                          }
+                                        }
+                                      >
+                                        Player 
+                                      </span>
+                                    </Typography>
+                                  </ReactResizeObserver>
+                                </LocaleReceiver>
+                              </Base>
+                            </withConfigConsumer(Base)>
+                          </Text>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </Col>
+                <Col
+                  span={8}
+                >
+                  <div
+                    className="ant-col ant-col-8"
+                  >
+                    <Card
+                      bordered={false}
+                      title="Player 2"
+                    >
+                      <div
+                        className="ant-card"
+                      >
+                        <div
+                          className="ant-card-head"
+                          style={Object {}}
+                        >
+                          <div
+                            className="ant-card-head-wrapper"
+                          >
+                            <div
+                              className="ant-card-head-title"
+                            >
+                              Player 2
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className="ant-card-body"
+                          style={Object {}}
+                        />
+                      </div>
+                    </Card>
+                  </div>
+                </Col>
+              </div>
+            </Row>
+            <Row
+              gutter={0}
+            >
+              <div
+                className="ant-row"
+              >
+                <ForwardRef
+                  callback={[Function]}
+                  id="box0"
+                  key="box0"
+                >
+                  <Col
+                    span={1}
+                    xl={8}
+                  >
+                    <div
+                      className="ant-col ant-col-1 ant-col-xl-8"
+                    >
+                      <Button
+                        block={false}
+                        ghost={false}
+                        htmlType="button"
+                        id="box0"
+                        key="box0"
+                        loading={false}
+                        onClick={[Function]}
+                      >
+                        <Wave>
+                          <button
+                            className="ant-btn"
+                            id="box0"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <span
+                              key=".0"
+                            >
+                              -
+                            </span>
+                          </button>
+                        </Wave>
+                      </Button>
+                    </div>
+                  </Col>
+                </ForwardRef>
+                <ForwardRef
+                  callback={[Function]}
+                  id="box1"
+                  key="box1"
+                >
+                  <Col
+                    span={1}
+                    xl={8}
+                  >
+                    <div
+                      className="ant-col ant-col-1 ant-col-xl-8"
+                    >
+                      <Button
+                        block={false}
+                        ghost={false}
+                        htmlType="button"
+                        id="box1"
+                        key="box1"
+                        loading={false}
+                        onClick={[Function]}
+                      >
+                        <Wave>
+                          <button
+                            className="ant-btn"
+                            id="box1"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <span
+                              key=".0"
+                            >
+                              -
+                            </span>
+                          </button>
+                        </Wave>
+                      </Button>
+                    </div>
+                  </Col>
+                </ForwardRef>
+                <ForwardRef
+                  callback={[Function]}
+                  id="box2"
+                  key="box2"
+                >
+                  <Col
+                    span={1}
+                    xl={8}
+                  >
+                    <div
+                      className="ant-col ant-col-1 ant-col-xl-8"
+                    >
+                      <Button
+                        block={false}
+                        ghost={false}
+                        htmlType="button"
+                        id="box2"
+                        key="box2"
+                        loading={false}
+                        onClick={[Function]}
+                      >
+                        <Wave>
+                          <button
+                            className="ant-btn"
+                            id="box2"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <span
+                              key=".0"
+                            >
+                              -
+                            </span>
+                          </button>
+                        </Wave>
+                      </Button>
+                    </div>
+                  </Col>
+                </ForwardRef>
+                <ForwardRef
+                  callback={[Function]}
+                  id="box3"
+                  key="box3"
+                >
+                  <Col
+                    span={1}
+                    xl={8}
+                  >
+                    <div
+                      className="ant-col ant-col-1 ant-col-xl-8"
+                    >
+                      <Button
+                        block={false}
+                        ghost={false}
+                        htmlType="button"
+                        id="box3"
+                        key="box3"
+                        loading={false}
+                        onClick={[Function]}
+                      >
+                        <Wave>
+                          <button
+                            className="ant-btn"
+                            id="box3"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <span
+                              key=".0"
+                            >
+                              -
+                            </span>
+                          </button>
+                        </Wave>
+                      </Button>
+                    </div>
+                  </Col>
+                </ForwardRef>
+                <ForwardRef
+                  callback={[Function]}
+                  id="box4"
+                  key="box4"
+                >
+                  <Col
+                    span={1}
+                    xl={8}
+                  >
+                    <div
+                      className="ant-col ant-col-1 ant-col-xl-8"
+                    >
+                      <Button
+                        block={false}
+                        ghost={false}
+                        htmlType="button"
+                        id="box4"
+                        key="box4"
+                        loading={false}
+                        onClick={[Function]}
+                      >
+                        <Wave>
+                          <button
+                            className="ant-btn"
+                            id="box4"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <span
+                              key=".0"
+                            >
+                              -
+                            </span>
+                          </button>
+                        </Wave>
+                      </Button>
+                    </div>
+                  </Col>
+                </ForwardRef>
+                <ForwardRef
+                  callback={[Function]}
+                  id="box5"
+                  key="box5"
+                >
+                  <Col
+                    span={1}
+                    xl={8}
+                  >
+                    <div
+                      className="ant-col ant-col-1 ant-col-xl-8"
+                    >
+                      <Button
+                        block={false}
+                        ghost={false}
+                        htmlType="button"
+                        id="box5"
+                        key="box5"
+                        loading={false}
+                        onClick={[Function]}
+                      >
+                        <Wave>
+                          <button
+                            className="ant-btn"
+                            id="box5"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <span
+                              key=".0"
+                            >
+                              -
+                            </span>
+                          </button>
+                        </Wave>
+                      </Button>
+                    </div>
+                  </Col>
+                </ForwardRef>
+                <ForwardRef
+                  callback={[Function]}
+                  id="box6"
+                  key="box6"
+                >
+                  <Col
+                    span={1}
+                    xl={8}
+                  >
+                    <div
+                      className="ant-col ant-col-1 ant-col-xl-8"
+                    >
+                      <Button
+                        block={false}
+                        ghost={false}
+                        htmlType="button"
+                        id="box6"
+                        key="box6"
+                        loading={false}
+                        onClick={[Function]}
+                      >
+                        <Wave>
+                          <button
+                            className="ant-btn"
+                            id="box6"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <span
+                              key=".0"
+                            >
+                              -
+                            </span>
+                          </button>
+                        </Wave>
+                      </Button>
+                    </div>
+                  </Col>
+                </ForwardRef>
+                <ForwardRef
+                  callback={[Function]}
+                  id="box7"
+                  key="box7"
+                >
+                  <Col
+                    span={1}
+                    xl={8}
+                  >
+                    <div
+                      className="ant-col ant-col-1 ant-col-xl-8"
+                    >
+                      <Button
+                        block={false}
+                        ghost={false}
+                        htmlType="button"
+                        id="box7"
+                        key="box7"
+                        loading={false}
+                        onClick={[Function]}
+                      >
+                        <Wave>
+                          <button
+                            className="ant-btn"
+                            id="box7"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <span
+                              key=".0"
+                            >
+                              -
+                            </span>
+                          </button>
+                        </Wave>
+                      </Button>
+                    </div>
+                  </Col>
+                </ForwardRef>
+                <ForwardRef
+                  callback={[Function]}
+                  id="box8"
+                  key="box8"
+                >
+                  <Col
+                    span={1}
+                    xl={8}
+                  >
+                    <div
+                      className="ant-col ant-col-1 ant-col-xl-8"
+                    >
+                      <Button
+                        block={false}
+                        ghost={false}
+                        htmlType="button"
+                        id="box8"
+                        key="box8"
+                        loading={false}
+                        onClick={[Function]}
+                      >
+                        <Wave>
+                          <button
+                            className="ant-btn"
+                            id="box8"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <span
+                              key=".0"
+                            >
+                              -
+                            </span>
+                          </button>
+                        </Wave>
+                      </Button>
+                    </div>
+                  </Col>
+                </ForwardRef>
+              </div>
+            </Row>
+          </section>
+        </BasicLayout>
+      </Adapter>
+    </div>
+  </GamePlay>
+</Provider>
 `;
