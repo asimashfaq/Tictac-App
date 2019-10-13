@@ -1,0 +1,6 @@
+[
+    { "winner": "1", "draw": false, "id": "1", "player2": "x", "player1": "o" },
+    { "winner": "2", "draw": false, "id": "2", "player2": "x", "player1": "o" },
+    { "winner": "2", "draw": false, "id": "3", "player2": "x", "player1": "o" },
+    { "winner": "2", "draw": false, "id": "4", "player2": "o", "player1": "x" }
+]

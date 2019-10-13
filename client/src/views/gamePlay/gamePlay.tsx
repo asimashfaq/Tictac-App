@@ -7,7 +7,7 @@ import GameBox from '../../components/gamebox/gamebox'
 import './gamePlay.scss'
 import { getGamePlayReset } from '../../redux/gamePlay/get/actions'
 import { asyncForEach, waitFor } from '../../shared/functions'
-import { any } from 'prop-types'
+
 const { Text } = Typography
 interface Props {
   errorMsg: boolean

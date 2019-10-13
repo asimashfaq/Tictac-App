@@ -1,5 +1,9 @@
 {
   "projectId": "pasy2d",
   "viewportWidth": 1920,
-  "viewportHeight": 1080
+  "viewportHeight": 1080,
+  "env":{
+    "API_SERVER":"http://0.0.0.0:3000",
+    "CLIENT_SERVER": "http://0.0.0.0:3001"
+  }
 }

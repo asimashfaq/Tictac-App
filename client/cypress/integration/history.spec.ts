@@ -46,12 +46,7 @@ describe('Game Plays History', () => {
     cy.route({
       method: 'GET',
       url: 'http://0.0.0.0:3000/gameplays',
-      response: [
-        { winner: '1', draw: false, id: '1', player2: 'x', player1: 'o' },
-        { winner: '2', draw: false, id: '2', player2: 'x', player1: 'o' },
-        { winner: '2', draw: false, id: '3', player2: 'x', player1: 'o' },
-        { winner: '2', draw: false, id: '4', player2: 'o', player1: 'x' },
-      ],
+      response: 'fixture:gameplays.json',
     })
     cy.visit('http://localhost:3001/history')
     cy.get('.ant-table-row').should($el => {
