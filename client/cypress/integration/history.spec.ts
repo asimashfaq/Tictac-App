@@ -7,12 +7,12 @@ describe('Game Plays History', () => {
     cy.route({
       method: 'GET',
       status: 404,
-      url: 'http://0.0.0.0:3000/gameplays',
+      url: `${Cypress.env('API_SERVER')}/gameplays`,
       response: {
         message: 'No Data found',
       },
     })
-    cy.visit('http://localhost:8080/history')
+    cy.visit(`${Cypress.env('CLIENT_SERVER')}/history`)
     cy.get('.msg').should('contain', 'No data to load')
   })
   it('should show the loading message', () => {
@@ -20,12 +20,12 @@ describe('Game Plays History', () => {
     cy.route({
       method: 'GET',
       delay: 5000,
-      url: 'http://0.0.0.0:3000/gameplays',
+      url: `${Cypress.env('API_SERVER')}/gameplays`,
       response: {
         message: 'No Data found',
       },
     })
-    cy.visit('http://localhost:8080/history')
+    cy.visit(`${Cypress.env('CLIENT_SERVER')}/history`)
     cy.get('.ant-layout-content > div').should('contain', 'Loading')
   })
   it('should show error message', () => {
@@ -33,22 +33,22 @@ describe('Game Plays History', () => {
     cy.route({
       method: 'GET',
       status: 503,
-      url: 'http://0.0.0.0:3000/gameplays',
+      url: `${Cypress.env('API_SERVER')}/gameplays`,
       response: {
         message: 'Some thing went wrong',
       },
     })
-    cy.visit('http://localhost:3001/history')
+    cy.visit(`${Cypress.env('CLIENT_SERVER')}/history`)
     cy.get('.errorMsg').should('contain', 'Request failed with status code 503')
   })
   it('should show the data', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      url: 'http://0.0.0.0:3000/gameplays',
+      url: `${Cypress.env('API_SERVER')}/gameplays`,
       response: 'fixture:gameplays.json',
     })
-    cy.visit('http://localhost:3001/history')
+    cy.visit(`${Cypress.env('CLIENT_SERVER')}/history`)
     cy.get('.ant-table-row').should($el => {
       expect($el.length).to.be.eq(4)
     })

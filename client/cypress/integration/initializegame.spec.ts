@@ -2,7 +2,7 @@
 
 describe('Game', () => {
   it('should initialize the game', () => {
-    cy.visit('http://localhost:8080')
+    cy.visit(`${Cypress.env('CLIENT_SERVER')}`)
     cy.get('#box0').should('contain', '-')
     cy.get('#box1').should('contain', '-')
     cy.get('#box2').should('contain', '-')

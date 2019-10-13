@@ -6,10 +6,11 @@ describe('Play Game', () => {
     cy.server()
     cy.route({
       method: 'POST',
-      url: 'http://0.0.0.0:3000/gameplay',
+      url: `${Cypress.env('API_SERVER')}/gameplay`,
       response: { id: '123' },
     })
-    cy.visit('http://localhost:8080')
+    cy.visit(`${Cypress.env('CLIENT_SERVER')}`)
+
     cy.get('#box0').click()
     cy.get('#box8').click()
     cy.get('#box2').click()
