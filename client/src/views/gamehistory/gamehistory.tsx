@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getGamePlays } from '../../redux/gamePlay/list/api'
 import GamePlays from '../../components/gameplays'
 import { Link } from 'react-router-dom'
+import { stat } from 'fs'
 
 const GameHistory: React.FC = () => {
   const columns = [
@@ -48,7 +49,11 @@ const GameHistory: React.FC = () => {
     <React.Fragment>
       {console.log(state)}
       {state.fetching === false ? (
-        <GamePlays data={state.data} cloumns={columns} />
+        state.error === null ? (
+          <GamePlays data={state.data} cloumns={columns} />
+        ) : (
+          <div className="errorMsg">{state.error}</div>
+        )
       ) : (
         <div>Loading</div>
       )}

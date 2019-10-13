@@ -1,6 +1,6 @@
 /// <reference types="cypress"/>
 import 'cypress-wait-until'
-import { async } from 'q'
+
 
 describe('Play Game', () => {
   it('should win the game', () => {
