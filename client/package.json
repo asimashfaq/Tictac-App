@@ -38,7 +38,7 @@
     "test:coverage": "jest --verbose --coverage",
     "eject": "react-scripts eject",
     "cypress": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run --record --key efaa256b-9a73-4ce7-a35d-b9cfa9fc0621"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -69,6 +69,7 @@
     "@types/redux-mock-store": "^1.0.1",
     "@types/sinon": "^7.0.13",
     "async-enzyme-helpers": "^1.1.0",
+    "cypress-wait-until": "^1.4.1",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.4.0",
