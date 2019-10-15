@@ -6,11 +6,9 @@ describe('Game Plays History', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      status: 404,
+      status: 200,
       url: `${Cypress.env('API_SERVER')}/gameplays`,
-      response: {
-        message: 'No Data found',
-      },
+      response: [],
     })
     cy.visit(`${Cypress.env('CLIENT_SERVER')}/history`)
     cy.get('.msg').should('contain', 'No data to load')
@@ -19,11 +17,9 @@ describe('Game Plays History', () => {
     cy.server()
     cy.route({
       method: 'GET',
-      delay: 5000,
+      status: 200,
       url: `${Cypress.env('API_SERVER')}/gameplays`,
-      response: {
-        message: 'No Data found',
-      },
+      response: [],
     })
     cy.visit(`${Cypress.env('CLIENT_SERVER')}/history`)
     cy.get('.ant-layout-content > div').should('contain', 'Loading')
