@@ -3,7 +3,8 @@ Technology stack
 
 React.Js + Node.js+ Prisma + Mongodb
 
-
+`` Test Coverage React ``
+![alt text](https://image.prntscr.com/image/fE33C64JRsWJTxfpT6ezqA.png)
 
 To setup this project kindly do the following steps
 ### 1.Clone the Repo
