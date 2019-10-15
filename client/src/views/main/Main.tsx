@@ -1,3 +1,6 @@
+/**
+ * @Main defines the Layout of the App.
+ */
 import React, { useReducer } from 'react'
 import { Layout, Icon } from 'antd'
 import Siderbar from '../../components/sidebar/Sidebar'
@@ -5,6 +8,7 @@ import { Switch } from 'react-router-dom'
 import { IContextProps } from '../../shared/context/Context'
 const { Header, Content } = Layout
 
+// Reducer for the Toggle Menu
 const reducer = (state: any, action: any) => {
   switch (action.type) {
     case 'press':
@@ -16,12 +20,16 @@ const reducer = (state: any, action: any) => {
       return state
   }
 }
-
+// Create the context for the SideBar Menu
 const Context = React.createContext({} as IContextProps)
+/***
+ * @routes App routes
+ **/
 interface Props {
   routes: JSX.Element[]
 }
 const Main = (props: Props) => {
+  // create the local Reducer (react-hooks) for the Menu
   const [state, dispatch] = useReducer(reducer, {
     label: 'TicTac',
     collapse: false,

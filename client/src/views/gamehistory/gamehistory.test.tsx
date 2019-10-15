@@ -1,3 +1,6 @@
+/**
+ * Test @GameHistory
+ **/
 import React from 'react'
 import { mount } from 'enzyme'
 import { Provider } from 'react-redux'
@@ -9,15 +12,14 @@ import gamePlayListReducer from '../../redux/gamePlay/list/reducer'
 import { GET_GAMEPLAYS_SUCCESS, GET_GAMEPLAYS_REQUEST } from '../../redux/gamePlay/list/actions'
 import { MemoryRouter } from 'react-router'
 jest.mock('../../redux/gamePlay/list/api')
+
 let store: any
 let wrapper: any
 const createMockStore = configureMockStore([thunk])
-
 waitForExpect.defaults.timeout = 55000
-//const mockStore = configureMockStore(middlewares)
 
 describe('GameHistory', () => {
-  let useEffect: any
+  // create the reducer
   const createState = (initialState: any) => (actions: any) => {
     return {
       gameplay: {
@@ -25,12 +27,13 @@ describe('GameHistory', () => {
       },
     }
   }
+  // create the initial state
   const initialState = createState({
     fetching: true,
     data: [],
     error: null,
   })
-
+  // create the mock store
   beforeEach(() => {
     store = createMockStore(initialState)
   })
@@ -60,8 +63,10 @@ describe('GameHistory', () => {
     await waitForExpect(() => {
       wrapper.update()
       expect.assertions(3)
+      // validate the Actions  GET_GAMEPLAYS_REQUEST &  GET_GAMEPLAYS_SUCCESS call on the load
       expect(actions[0].type).toEqual(GET_GAMEPLAYS_REQUEST)
       expect(actions[1].type).toEqual(GET_GAMEPLAYS_SUCCESS)
+      // validate table render properly
       expect(wrapper.find('Table').length > 0).toBeTruthy()
       wrapper.unmount()
     })

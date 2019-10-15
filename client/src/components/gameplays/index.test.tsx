@@ -1,3 +1,6 @@
+/**
+ * Test @GamePlays
+ **/
 import React from 'react'
 import { mount } from 'enzyme'
 import GamePlays from './index'
@@ -5,7 +8,7 @@ import GamePlays from './index'
 let wrapper: any
 describe('GamePlays', () => {
   it('renders game play successfully', () => {
-    let props = {
+    const props = {
       cloumns: [
         {
           title: 'ID',
@@ -34,15 +37,16 @@ describe('GamePlays', () => {
       ],
     }
     wrapper = mount(<GamePlays {...props} />)
+    // validate the Table to be Render
     expect(wrapper.find('Table').length > 0).toBeTruthy()
-    // console.log(wrapper.debug())
   })
   it('should show error message', () => {
-    let props = {
+    const props = {
       cloumns: [],
       data: [],
     }
     wrapper = mount(<GamePlays {...props} />)
+    // Validate teh No data Load Message
     expect(wrapper.find(`.msg`).text()).toEqual(`No data to load`)
   })
 })

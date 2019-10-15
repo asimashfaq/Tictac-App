@@ -1,3 +1,6 @@
+/**
+ * Components renders the colapseable @SideBar || @Menu of app
+ */
 import React, { useContext } from 'react'
 import { Layout, Menu, Icon, Typography } from 'antd'
 import { Link } from 'react-router-dom'

@@ -1,6 +1,12 @@
-import { InitalizeGame } from '../functions'
+/**
+ * @gameReducer store the state of game.
+ * Update state of the game as players play the game.
+ **/
 
+import { InitalizeGame } from '../functions'
+// Randomly Initialize the game.
 export const GAME_INITIALS: Game = InitalizeGame()
+// Static Game Initialize  used for testing.
 export const GAME_INITIALS_STATIC: Game = {
   boxes: [],
   player: 1,
@@ -15,11 +21,16 @@ export const GAME_INITIALS_STATIC: Game = {
   replyModalVisible: false,
   drawModalVisible: false,
 }
+
 export const gameReducer = (state: any, action: any) => {
   switch (action.type) {
     case 'reset':
+      // reset the game with payload pass to the reducer
+      // discrad the previous state
       return action.payload
     case 'click': {
+      // save the payload the boxes array
+      // update the player and letter value to change the player handle
       const box: Box = action.payload
       return {
         ...state,
@@ -30,6 +41,7 @@ export const gameReducer = (state: any, action: any) => {
       }
     }
     case 'winner': {
+      // save the winning player and show the  success modal
       return {
         ...state,
         winnerPlayer: action.payload,
@@ -40,6 +52,7 @@ export const gameReducer = (state: any, action: any) => {
       }
     }
     case 'draw': {
+      // show the draw modal and update to state
       return {
         ...state,
         winnerPlayer: 0,
@@ -50,6 +63,7 @@ export const gameReducer = (state: any, action: any) => {
       }
     }
     case 'replay': {
+      // replay the game and hide draw or success modal
       return {
         ...state,
         replay: true,
@@ -60,6 +74,7 @@ export const gameReducer = (state: any, action: any) => {
       }
     }
     case 'replay_end': {
+      // show the replay end modal.
       return {
         ...state,
         replyModalVisible: true,

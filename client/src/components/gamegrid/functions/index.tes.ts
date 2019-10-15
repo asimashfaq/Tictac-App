@@ -1,28 +1,36 @@
+/**
+ * Testing the @InitalizeGame func 
+ **/
 import { InitalizeGame } from './index'
 describe('InitalizeGame action will generate the random data ', () => {
   it('Should Initalize with Random Data', () => {
     const data = InitalizeGame()
+    // should not have same value 'x' or 'o'
     expect(data.player1).not.toEqual(data.player2)
   })
 
   it('Should Initalize player 1', () => {
     const data = InitalizeGame()
-    expect(data.player1 == 'x' || data.player1 == 'o').toBeTruthy()
+    // should have value 'x' or 'o'
+    expect(data.player1 === 'x' || data.player1 === 'o').toBeTruthy()
   })
 
   it('Should Initalize player 2', () => {
     const data = InitalizeGame()
-    expect(data.player2 == 'x' || data.player2 == 'o').toBeTruthy()
+    // should have value 'x' or 'o'
+    expect(data.player2 === 'x' || data.player2 === 'o').toBeTruthy()
   })
 
   it('Should Initalize with Player 1 or 2', () => {
     const data = InitalizeGame()
-    expect(data.player == 1 || data.player == 2).toBeTruthy()
+    // player should have value 1 or 2
+    expect(data.player === 1 || data.player === 2).toBeTruthy()
   })
 
   it('Should Initalize with Letter o or x', () => {
     const data = InitalizeGame()
-    expect(data.letter == 'o' || data.letter == 'x').toBeTruthy()
+    // letter should be 'o' or 'x'
+    expect(data.letter === 'o' || data.letter === 'x').toBeTruthy()
   })
 
   /* it('Should Initalize player 1 with o or x', () => {

@@ -1,7 +1,11 @@
+/**
+ * Test @gameReducer
+ **/
 import { gameReducer, GAME_INITIALS_STATIC } from './index'
 describe(`gamereducer`, () => {
   it(`returns the initial state correctly`, () => {
     const reducer = gameReducer(GAME_INITIALS_STATIC, { type: ``, payload: null })
+    // validate state initialize exactly
     expect(reducer).toEqual(GAME_INITIALS_STATIC)
   })
   it(`handles reset as expected`, () => {
@@ -9,6 +13,7 @@ describe(`gamereducer`, () => {
       type: 'reset',
       payload: GAME_INITIALS_STATIC,
     })
+    // validate state reset to new pass Object.
     expect(reducer).toEqual(GAME_INITIALS_STATIC)
   })
   it(`handles click as expected`, () => {
@@ -21,7 +26,13 @@ describe(`gamereducer`, () => {
         step: 1,
       },
     })
-
+    /**
+     * Validate
+     * @step must be 2.
+     * @letter must be 'o' not be equal to value
+     * @boxes append by the payload
+     * @player must be 2 as payload contain the value of player 1 
+     **/
     expect(reducer).toEqual({
       step: 2,
       letter: 'o',
@@ -50,7 +61,14 @@ describe(`gamereducer`, () => {
       type: 'winner',
       payload: 1,
     })
-
+    /**
+     * Validate
+     * @winnerPlayer must be 1.
+     * @successModalVisible must be visible
+     * @letter must be '-'
+     * @step must be 0
+     * @player must be 0
+     **/
     expect(reducer).toEqual({
       step: 0,
       letter: '-',
@@ -70,7 +88,14 @@ describe(`gamereducer`, () => {
     const reducer = gameReducer(GAME_INITIALS_STATIC, {
       type: 'draw',
     })
-
+    /**
+     * Validate
+     * @winnerPlayer must be 0.
+     * @drawModalVisible must be visible
+     * @letter must be '-'
+     * @step must be 0
+     * @player must be 0
+     **/
     expect(reducer).toEqual({
       step: 0,
       letter: '-',

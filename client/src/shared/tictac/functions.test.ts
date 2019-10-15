@@ -1,3 +1,6 @@
+/**
+ * Test @func CheckWinner
+ **/
 import { CheckWinner } from './functions'
 describe('CheckWinner action will check for winner', () => {
   it('CheckWinner Should Return Not Valid Data', () => {
@@ -10,6 +13,7 @@ describe('CheckWinner action will check for winner', () => {
 
     const expected: string = 'Not Valid'
     const result = CheckWinner(data)
+    // validate error message i.e Not Valid
     expect(result).toEqual(expected)
   })
 
@@ -24,6 +28,7 @@ describe('CheckWinner action will check for winner', () => {
 
     const expected: Winner = { draw: false, player: 2 }
     const result = CheckWinner(data)
+    // validate the winner
     expect(result).toEqual(expected)
   })
 
@@ -42,6 +47,7 @@ describe('CheckWinner action will check for winner', () => {
 
     const expected: Winner = { draw: true, player: 0 }
     const result = CheckWinner(data)
+    // validate the draw
     expect(result).toEqual(expected)
   })
 })

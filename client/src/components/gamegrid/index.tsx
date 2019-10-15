@@ -1,7 +1,13 @@
+/**
+ * @GameGrid
+ * Render all the UI to play game.
+ * Save the result of game to the db.
+ **/
+
 import React, { useReducer, useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { Layout, Row, Col, Card, Typography } from 'antd'
-import GameBox from '../gamebox/gamebox'
+import GameBox from '../gamebox'
 import './gamegrid.scss'
 import { InitalizeGame } from './functions'
 import GameModal from '../gamemodal/index'
@@ -16,22 +22,46 @@ let animateDelay = 800
 const boxRefs: any = []
 
 const GameGrid = () => {
+  /**
+   * Stores all the internal states of the @Component
+   * and returns a copy of state in @state
+   * and a dispatcher function that changes @state with @dispatch
+   * dispatching type of @action
+   */
   const [state, dispatch] = useReducer(gameReducer, GAME_INITIALS)
 
+  /**
+   * Stores @dispatcher of redux, used to change @state in reducers
+   */
   const sdispatch = useDispatch()
 
+  /**
+   * Animates the complete GamePlay, when Replay Button is clicked
+   */
   const animateGame = useCallback(() => {
     return new Promise(async res => {
+      // loop through all the boxes syncoronusly.
       await asyncForEach(state.boxes, async (box: Box, index: number) => {
+        // change the inner html to box.value send it must be 'x' or 'o'.
         boxRefs[box.id].buttonNode.innerHTML = `<span>${box.value}</span>`
+        // disable the button so that user cannot click it.
         boxRefs[box.id].buttonNode.disabled = true
+        // check for the end of animation.
         if (index < state.boxes.length - 1) {
+          // add the delay to show the animation.
           await waitFor(animateDelay)
         }
       })
+      // resolve the promise.
       res()
     })
   }, [state.boxes])
+
+  /**
+   * Saves the current GamePlay
+   * @param draw boolean
+   * @param player string
+   */
   const saveGame = useCallback(
     (draw: boolean, player: string) => {
       sdispatch(
@@ -46,19 +76,28 @@ const GameGrid = () => {
     },
     [sdispatch, state.boxes, state.player1, state.player2]
   )
+
+  /**
+   * Evaluate's game, finds result through @CheckWinner func
+   * dispatches result DRAW || WINNER
+   */
   useEffect(() => {
+    // return the execution if ther replay or draw Modal is visible.
     if (state.replay || state.drawModalVisible) {
       return
     }
+    //  check for the game win when the steps are in between 5-8.
     if (state.step >= 5 && state.step < 9) {
+      // check for the winner and return the result.
       const result: Winner = CheckWinner(state.boxes)
-      if (result.draw === false && state.winnerPlayer === 0) {
+      if (!result.draw && state.winnerPlayer === 0) {
         dispatch({ type: 'winner', payload: result.player })
         saveGame(false, result.player.toString())
       }
     } else if (state.step === 9) {
+      // check for the winner at the end of game. Game should be draw or must have a winner.
       const result: Winner = CheckWinner(state.boxes)
-      if (result.draw === false && state.winnerPlayer === 0) {
+      if (!result.draw && state.winnerPlayer === 0) {
         dispatch({ type: 'winner', payload: result.player })
         saveGame(false, result.player.toString())
       } else {
@@ -69,11 +108,18 @@ const GameGrid = () => {
     return () => {}
   }, [state.boxes, state.replay, state.drawModalVisible, state.winnerPlayer, state.step, saveGame])
 
+  /**
+   * Works once @replay state changes, if it changes to TRUE,
+   * it animates gameplay with @animateGame
+   */
   useEffect(() => {
     if (state.replay) {
+      // reset the UI of the game play all boxes get enabled and have value '-'
       restUI()
+      // reset the animation Delay value
       animateDelay = 1000
       animateGame().then(() => {
+        // wait for 500ms to show the Replay end modal
         waitFor(500).then(() => {
           dispatch({ type: 'replay_end' })
         })
@@ -81,6 +127,10 @@ const GameGrid = () => {
     }
     return
   }, [state.replay, animateGame])
+
+  /**
+   * Resets the state of GamePlay
+   */
   const restUI = () => {
     // tslint:disable-next-line: no-increment-decrement
     for (let i: number = 0; i < 9; i++) {
@@ -89,11 +139,17 @@ const GameGrid = () => {
     }
   }
 
+  /**
+   * callBack Func provided to @GameBox <Button />
+   * that changes states of buttons
+   */
   const btnCallBack = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
+      // get the click button id
       const id: string = event.currentTarget.id
       boxRefs[id].buttonNode.innerHTML = `<span>${state.letter}</span>`
       boxRefs[id].buttonNode.disabled = true
+      // dispatch the click event to React Hooks.
       dispatch({
         type: 'click',
         payload: {
@@ -108,6 +164,10 @@ const GameGrid = () => {
   )
   const items: any = []
 
+  /**
+   * Stores all the @GameBox buttons,
+   * for future references and accessing throguh ref of each @GameBox
+   */
   // tslint:disable-next-line: no-increment-decrement
   for (let i = 0; i < 9; i++) {
     items.push(
@@ -142,7 +202,13 @@ const GameGrid = () => {
           </Card>
         </Col>
       </Row>
+      {/* Generate the game grid 
+        |----|----|----|
+        |----|----|----|
+        |----|----|----|      
+      */}
       <Row>{items}</Row>
+      {/* Success GameModal. Visible when a player wins the game */}
       <GameModal
         key={'success'}
         mstatus={'success'}
@@ -157,6 +223,7 @@ const GameGrid = () => {
         }}
         visible={state.successModalVisible}
       />
+      {/* Error GameModal. Visible when match gets draw */}
       <GameModal
         key={'error'}
         mstatus={'error'}
@@ -171,6 +238,7 @@ const GameGrid = () => {
         }}
         visible={state.drawModalVisible}
       />
+      {/* Success GameModal. Visible when replay ends */}
       <GameModal
         key={'warning'}
         mstatus={'warning'}

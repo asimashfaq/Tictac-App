@@ -1,3 +1,6 @@
+/**
+ * Test @GameModal
+ **/
 import React from 'react'
 import { mount } from 'enzyme'
 import GameModal from './index'
@@ -16,7 +19,7 @@ describe('GameModal', () => {
   })
 
   it('renders success modal', () => {
-    let props = {
+    const props = {
       visible: true,
       mstatus: 'success', // message status
       title: 'Title',
@@ -29,10 +32,11 @@ describe('GameModal', () => {
         <GameModal {...props} />
       </MemoryRouter>
     )
+    // validate the success message to show
     expect(wrapper.find('.ant-result-success').length).toEqual(1)
   })
   it('renders info modal', () => {
-    let props = {
+    const props = {
       visible: true,
       mstatus: 'info', // message status
       title: 'Title',
@@ -45,10 +49,11 @@ describe('GameModal', () => {
         <GameModal {...props} />
       </MemoryRouter>
     )
+    // validate the info message to show
     expect(wrapper.find('.ant-result-info').length).toEqual(1)
   })
   it('should not render child component of modal', () => {
-    let props = {
+    const props = {
       visible: false,
       mstatus: 'success', // message status
       title: 'Title',
@@ -61,26 +66,12 @@ describe('GameModal', () => {
         <GameModal {...props} />
       </MemoryRouter>
     )
+    // should not render the modal when visible
     expect(wrapper.find(Result).length).toEqual(0)
   })
-  it('renders info modal', () => {
-    let props = {
-      visible: true,
-      mstatus: 'info', // message status
-      title: 'Title',
-      subtitle: 'subtitle',
-      playagain: jest.fn(),
-      replay: jest.fn(),
-    }
-    wrapper = mount(
-      <MemoryRouter>
-        <GameModal {...props} />
-      </MemoryRouter>
-    )
-    expect(wrapper.find('.ant-result-info').length).toEqual(1)
-  })
+
   it('should simulate clicks', async () => {
-    let props = {
+    const props = {
       visible: true,
       mstatus: 'success', // message status
       title: 'Title',
@@ -95,16 +86,19 @@ describe('GameModal', () => {
     )
     await wrapper.update()
     await waitForExpect(() => {
+      // validate the Play Again and Replay Button Exisits
       expect(wrapper.find('#successplay_again').length > 0).toBeTruthy()
       expect(wrapper.find('#successreplay').length > 0).toBeTruthy()
     })
     await act(async () => {
+      // click the Play Again Button
       wrapper
         .find('#successplay_again')
         .first()
         .simulate('click')
     })
     await act(async () => {
+      // Click the Replay Button
       wrapper
         .find('#successreplay')
         .first()
@@ -112,6 +106,7 @@ describe('GameModal', () => {
     })
 
     await waitForExpect(() => {
+      // validate the Button on Click Event
       expect(props.playagain).toHaveProperty('callCount', 1)
       expect(props.replay).toHaveProperty('callCount', 1)
     })
