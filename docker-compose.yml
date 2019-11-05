@@ -1,5 +1,5 @@
-version: '3'
-services: 
+version: "3"
+services:
   client:
     build: ./client
     image: webapp-react
@@ -7,17 +7,15 @@ services:
     ports:
       - "8080:80"
     environment:
-       API_URL: "http://0.0.0.0:3000"
+      API_URL: "http://0.0.0.0:3000"
   api:
     build: ./api
     image: webapp-api
     restart: always
     ports:
       - "3000:3000"
-    volumes:
-      - ./api:/api
-    networks: 
-     - backend
+    networks:
+      - backend
     environment:
       PRISMA_URL: prisma
       PRISMA_PORT: 4466
@@ -27,9 +25,9 @@ services:
     image: prismagraphql/prisma:1.34
     restart: always
     ports:
-    - "4466:4466"
-    networks: 
-    - backend
+      - "4466:4466"
+    networks:
+      - backend
     environment:
       PRISMA_CONFIG: |
         port: 4466
@@ -40,8 +38,8 @@ services:
   mongo:
     image: mongo:3.6
     restart: always
-    networks: 
-     - backend
+    networks:
+      - backend
     environment:
       MONGO_INITDB_ROOT_USERNAME: prisma
       MONGO_INITDB_ROOT_PASSWORD: prisma
